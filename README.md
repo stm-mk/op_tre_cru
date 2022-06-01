@@ -50,7 +50,10 @@ Webアプリケーションです。
 
 ### スケジュール
 企画〜技術調査：済
-README〜ER図作成：5/29 〆切
-メイン機能実装：5/30 - 6/30
-β版をRUNTEQ内リリース（MVP）：6/30 〆切
+README〜ER図作成：6/2 〆切
+メイン機能実装：6/2 - 7/2
+β版をRUNTEQ内リリース（MVP）：7/2 〆切
 本番リリース：7月中旬
+
+### Figma_URL
+https://www.figma.com/file/mHZU6TtQSGBDgOllR9gyoD/TOP?node-id=0%3A1
