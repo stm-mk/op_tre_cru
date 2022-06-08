@@ -86,3 +86,6 @@ test:
 production:
   <<: *default
   password: <%= ENV['OP_TRE_CRU_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
