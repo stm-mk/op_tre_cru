@@ -1,25 +1,23 @@
 <template>
   <v-app id="app">
-    <v-btn>Vuetify</v-btn>
-    <div>
-      <p>{{ message }}</p>
-    </div>
+    <Header class="md-auto" />
+    <router-view />
+    <Footer class="md-auto" />
   </v-app>
 </template>
 
 <script>
+import Header from './components/TheHeader'
+import Footer from './components/TheFooter'
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
+  components: {
+    Header,
+    Footer
   }
 }
 </script>
 
 <style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
 </style>
+
