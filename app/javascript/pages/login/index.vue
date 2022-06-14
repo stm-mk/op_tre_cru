@@ -52,8 +52,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'RegisterIndes',
+  name: 'LoginIndes',
   data() {
     return {
       user: {
@@ -63,7 +65,17 @@ export default {
     }
   },
   methods: {
-    login() {}
+    ...mapActions("users", [
+      "loginUser"
+    ]),
+    async login() {
+      try {
+        await this.loginUser(this.user)
+        this.$router.push({ name: "TopIndex" })
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 }
 
