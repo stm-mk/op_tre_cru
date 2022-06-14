@@ -23,7 +23,13 @@ const actions = {
 
     const UserResponse = await axios.get('users/me')
     commit('setUser', UserResponse.data)
-  }
+  },
+  logoutUser({ commit }) {
+    // ログアウト
+    localStorage.removeItem('auth_token')
+    axios.defaults.headers.common['Authorization'] = ''
+    commit('setUser', null)
+  },
 }
 
 export default {

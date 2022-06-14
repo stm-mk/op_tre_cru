@@ -7,24 +7,71 @@
 
       <v-spacer></v-spacer>
 
-      <v-menu dark>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
+      <v-toolbar-items class="hidden-sm-and-down" v-if="!authUser">
+        <v-tooltip bottom v-for="item in items" :key="item.title">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+              :to="{name: item.url}"
+            >
+              <v-icon large>{{ item.icon }}</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ item.title }}</span>
+        </v-tooltip>
+      </v-toolbar-items>
 
-        <v-list>
-          <v-list-item v-for="item in items" :key="item.title" :to="{name: item.url}">
-            <v-list-item-icon>
-              <v-icon large color="white">{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <v-toolbar-items class="hidden-sm-and-down" v-else>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon large>mdi-account-circle</v-icon>
+            </v-btn>
+          </template>
+          <span>マイページ</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+              @click.native="handleLogout"
+              to="#"
+            >
+              <v-icon large>mdi-logout</v-icon>
+            </v-btn>
+          </template>
+          <span>ログアウト</span>
+        </v-tooltip>
+      </v-toolbar-items>
+
+      <v-toolbar-items class="hidden-md-and-up">
+        <v-menu dark>
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item v-for="item in items" :key="item.title" :to="{name: item.url}">
+              <v-list-item-icon>
+                <v-icon large color="white">{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar-items>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -55,7 +102,13 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
+  name: "TheHeader",
+  computed: {
+    ...mapGetters("users", ["authUser"])
+  },
   data: function() {
     return {
       drawer: null,
@@ -68,13 +121,24 @@ export default {
         { title: 'フィードバック送信', icon: 'mdi-send', url: '#'}
       ],
       items: [
-        { title: 'ログイン', icon: 'mdi-login-variant', url: 'LoginIndex'},
+        { title: 'ログイン', icon: 'mdi-login', url: 'LoginIndex'},
         { title: 'サインイン', icon: 'mdi-account-plus', url: 'RegisterIndex'}
       ],
       home: {
         title: 'ホーム',
         icon: 'mdi-home', 
         url: 'TopIndex'
+      }
+    }
+  },
+  methods: {
+    ...mapActions("users", ["logoutUser"]),
+    async handleLogout() {
+      try {
+        await this.logoutUser()
+        this.$router.push({name: 'TopIndex'})
+      } catch (error) {
+        console.log(error)
       }
     }
   }
