@@ -15,7 +15,7 @@
         </template>
 
         <v-list>
-          <v-list-item v-for="item in items" :key="item.title" :to="item.url">
+          <v-list-item v-for="item in items" :key="item.title" :to="{name: item.url}">
             <v-list-item-icon>
               <v-icon large color="white">{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -33,6 +33,14 @@
       temporary
     >
       <v-list>
+        <v-list-item :to="{name: home.url}" exact>
+          <v-list-item-icon>
+            <v-icon large>{{ home.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ home.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item v-for="menu in menus" :key="menu.title" :to="{name: menu.url}">
           <v-list-item-icon>
             <v-icon large>{{ menu.icon }}</v-icon>
@@ -52,7 +60,6 @@ export default {
     return {
       drawer: null,
       menus: [
-        { title: 'ホーム', icon: 'mdi-home', url: 'TopIndex'},
         { title: 'トレマ周回数計算', icon: 'mdi-calculator', url: 'ToremaCalculation'},
         { title: 'フレンド募集要項', icon: 'mdi-card-account-details', url: '#'},
         { title: 'フレンド検索', icon: 'mdi-magnify', url: '#'},
@@ -61,9 +68,14 @@ export default {
         { title: 'フィードバック送信', icon: 'mdi-send', url: '#'}
       ],
       items: [
-        { title: 'ログイン', icon: 'mdi-login-variant', url: '#'},
-        { title: 'サインイン', icon: 'mdi-account-plus', url: '#'}
-      ]
+        { title: 'ログイン', icon: 'mdi-login-variant', url: 'LoginIndex'},
+        { title: 'サインイン', icon: 'mdi-account-plus', url: 'RegisterIndex'}
+      ],
+      home: {
+        title: 'ホーム',
+        icon: 'mdi-home', 
+        url: 'TopIndex'
+      }
     }
   }
 }
