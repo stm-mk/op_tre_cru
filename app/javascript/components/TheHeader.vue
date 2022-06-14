@@ -12,6 +12,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               icon
+              width="70"
               v-bind="attrs"
               v-on="on"
               :to="{name: item.url}"
@@ -30,6 +31,7 @@
               icon
               v-bind="attrs"
               v-on="on"
+              width="70"
             >
               <v-icon large>mdi-account-circle</v-icon>
             </v-btn>
@@ -44,6 +46,7 @@
               v-on="on"
               @click.native="handleLogout"
               to="#"
+              width="70"
             >
               <v-icon large>mdi-logout</v-icon>
             </v-btn>
