@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         get 'me'
       end
     end
+    resources :sessions
   end
 
   get '*path', to: 'home#index'
