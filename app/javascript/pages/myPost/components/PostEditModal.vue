@@ -10,7 +10,7 @@
             <v-text-field v-model="post.title" label="Title"></v-text-field>
           </v-col>
           <v-col cols="12" sm="6" md="6">
-            <v-text-field v-model="post.friend_level" label="Friend Lvel" suffix="レベル"></v-text-field>
+            <v-text-field v-model="post.friend_level" type="number" label="Friend Lvel" suffix="レベル"></v-text-field>
           </v-col>
           <v-col cols="12" sm="6" md="6">
             <v-autocomplete

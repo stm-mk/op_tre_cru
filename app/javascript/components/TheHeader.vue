@@ -120,7 +120,7 @@ export default {
       drawer: null,
       menus: [
         { title: 'トレマ周回数計算', icon: 'mdi-calculator', url: 'ToremaCalculation'},
-        { title: 'フレンド募集要項', icon: 'mdi-card-account-details', url: '#'},
+        { title: 'フレンド募集要項', icon: 'mdi-card-account-details', url: 'MyPostIndex'},
         { title: 'フレンド検索', icon: 'mdi-magnify', url: '#'},
         { title: 'フェス限データ', icon: 'mdi-database', url: '#'},
         { title: 'ニュース', icon: 'mdi-bell', url: '#'},
