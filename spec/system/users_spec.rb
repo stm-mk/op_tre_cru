@@ -76,8 +76,31 @@ RSpec.describe 'ユーザー機能', type: :system do
       expect(page).to have_current_path('/'), 'タスクページに遷移できていません'
     end
 
-    it 'マイページに遷移できない' do
+    it 'マイページに遷移したら、ログインページにリダイレクトされる' do
 
     end
-  end  
+
+    it 'フレンド募集要項に遷移したら、ログインページにリダイレクトされる' do
+
+    end
+  end
+
+  context 'ログイン後' do
+    before do
+      login_as(user)
+    end
+
+    it 'ログイン状態でヘッダーに「マイページ」、「ログアウト」ボタンが表示されている' do
+      visit root_path
+      expect(page).to have_selector('#logout-btn')
+      expect(page).to have_selector('#mypage-btn')
+    end
+
+    it 'ログアウトできる' do
+      visit root_path
+      find('#logout-btn').click
+      expect(page).to have_selector("#login-btn")
+      expect(page).to have_current_path('/')
+    end
+  end
 end

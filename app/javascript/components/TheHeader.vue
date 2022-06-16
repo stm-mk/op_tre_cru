@@ -33,6 +33,7 @@
               v-bind="attrs"
               v-on="on"
               width="70"
+              id="mypage-btn"
             >
               <v-icon large>mdi-account-circle</v-icon>
             </v-btn>
@@ -48,6 +49,7 @@
               @click.native="handleLogout"
               to="#"
               width="70"
+              id="logout-btn"
             >
               <v-icon large>mdi-logout</v-icon>
             </v-btn>
