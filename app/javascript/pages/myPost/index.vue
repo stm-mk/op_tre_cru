@@ -2,7 +2,8 @@
   <v-main class="grey lighten-2">
     <v-container fluid fill-height>
       <v-row no-gutters>
-        <v-col cols="12">
+        <v-col cols="12"
+        >
           <v-card>
             <v-toolbar class="title" elevation="2">
               フレンド募集要項作成
@@ -18,27 +19,31 @@
               </v-btn>
             </v-toolbar>
 
-            <v-card-text>
+            <v-card-text v-if="myPost">
               <h3 class="mt-4">フレンド募集要項詳細</h3>
               <v-row class="mt-2">
                 <v-col cols="12">
-                  <v-text-field v-model="post.title" label="Title" readonly></v-text-field>
+                  <v-text-field v-model="myPost.title" label="Title" readonly></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
-                  <v-text-field v-model="post.friend_level" label="Friend Lvel" suffix="レベル" readonly></v-text-field>
+                  <v-text-field v-model="myPost.friend_level" label="Friend Lvel" suffix="レベル" readonly></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field v-model="character2" label="募集キャラクター" readonly></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-textarea v-model="post.description" label="あいさつ" auto-grow readonly></v-textarea>
+                  <v-textarea v-model="myPost.description" label="あいさつ" auto-grow readonly></v-textarea>
                 </v-col>
               </v-row>
             </v-card-text>
 
+            <v-card-text v-else>
+              <h3>フレンド募集要項がありません。</h3>
+            </v-card-text>
+
             <v-divider></v-divider>
         
-            <v-card-actions>
+            <v-card-actions v-if="!myPost">
               <v-btn
                 outlined
                 rounded
@@ -47,6 +52,27 @@
                 @click="handleShowPostCreateModal"
               >
                 新規作成
+              </v-btn>
+            </v-card-actions>
+
+            <v-card-actions v-else>
+              <v-btn
+                outlined
+                rounded
+                text
+                class="mx-2 my-2"
+                @click="handleShowPostCreateModal"
+              >
+                編集
+              </v-btn>
+              <v-btn
+                outlined
+                rounded
+                text
+                class="mx-2 my-2"
+                @click="handleShowPostCreateModal"
+              >
+                削除
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -72,12 +98,13 @@
 <script>
 import PostCreateModal from "./components/PostCreateModal"
 import ExplanationModal from "./components/ExplanationModal.vue"
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'PostIndex',
   components: {
     PostCreateModal,
-    ExplanationModal
+    ExplanationModal,
   },
   data: function() {
     return {
@@ -88,11 +115,33 @@ export default {
       post: {
         title: "",
         friend_level: "",
-        description: ""
-      }
+        descriotion: ""
+      },
+      myPost: {}
     }
   },
+  computed: {
+    ...mapGetters("users", [
+      'authUser'
+    ]),
+    ...mapGetters("posts", [
+      'posts'
+    ]),
+    setMyPost() {
+      this.posts.filter(post => {
+        return post.user_id == this.authUser.id
+      })
+      return this.myPost = this.posts[0]
+    }
+  },
+  created() {
+    this.fetchPosts();
+  },
   methods: {
+    ...mapActions("posts", [
+      'createPost',
+      'fetchPosts',
+    ]),
     handleShowExplanationModal() {
       this.isVisibleExplanationModal = true;
     },
@@ -104,6 +153,14 @@ export default {
     },
     handleClosePostCreateModal() {
       this.isVisiblePostCreateModal = false;
+    },
+    async handleCreatePost(post) {
+      try {
+        await this.createPost(post)
+        this.handleClosePostCreateModal()
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
