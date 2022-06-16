@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :api do
+    resources :posts
     resources :users do
       collection do
         get 'me'
