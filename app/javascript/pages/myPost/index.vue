@@ -61,7 +61,7 @@
                 rounded
                 text
                 class="mx-2 my-2"
-                @click="handleShowPostCreateModal"
+                @click="handleShowPostEditModal"
               >
                 編集
               </v-btn>
@@ -91,6 +91,14 @@
           @create-post="handleCreatePost"
         />
       </v-dialog>
+
+      <v-dialog v-model="isVisiblePostEditModal">
+        <PostEditModal
+          :post="myPost"
+          @close-modal="handleClosePostEditModal"
+          @update-post="handleUpdatePost"
+        />
+      </v-dialog>
     </v-container>
   </v-main>
 </template>
@@ -98,6 +106,7 @@
 <script>
 import PostCreateModal from "./components/PostCreateModal"
 import ExplanationModal from "./components/ExplanationModal.vue"
+import PostEditModal from "./components/PostEditModal.vue"
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -105,18 +114,15 @@ export default {
   components: {
     PostCreateModal,
     ExplanationModal,
+    PostEditModal
   },
   data: function() {
     return {
       isVisibleExplanationModal: false,
       isVisiblePostCreateModal: false,
+      isVisiblePostEditModal: false,
       character1: '超フェス・ルフィ/技/格闘・自由',
       character2: '超フェス・カイドウ/力/強靭・打突',
-      post: {
-        title: "",
-        friend_level: "",
-        descriotion: ""
-      },
       myPost: {}
     }
   },
@@ -141,6 +147,8 @@ export default {
     ...mapActions("posts", [
       'createPost',
       'fetchPosts',
+      'updatePost',
+      'deletePost'
     ]),
     handleShowExplanationModal() {
       this.isVisibleExplanationModal = true;
@@ -154,9 +162,31 @@ export default {
     handleClosePostCreateModal() {
       this.isVisiblePostCreateModal = false;
     },
+    handleShowPostEditModal() {
+      this.isVisiblePostEditModal = true;
+    },
+    handleClosePostEditModal () {
+      this.isVisiblePostEditModal = false;
+    },
     async handleCreatePost(post) {
       try {
         await this.createPost(post)
+        this.handleClosePostCreateModal()
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async handleUpdatePost(post) {
+      try {
+        await this.updatePost(post)
+        this.handleClosePostEditModal()
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async handleDeletePost(post) {
+      try {
+        await this.deletePost(post)
         this.handleClosePostCreateModal()
       } catch (error) {
         console.log(error)

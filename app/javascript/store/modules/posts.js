@@ -14,6 +14,14 @@ const mutations = {
   },
   addPost: (state, post) => {
     state.posts.push(post)
+  },
+  updatePost: (state, updatePost) => {
+    const index = state.posts.findIndex(post => {
+      return post.id == updatePost.id
+    })
+
+    state.posts.splice(index, 1, updatePost)
+    
   }
 }
 
@@ -30,6 +38,10 @@ const actions = {
       .then(res => {
         commit('addPost', res.data)
       })
+  },
+  updatePost({commit}, post) {
+    return axios.patch(`posts/${post.id}`, post)
+    .then(res => { commit('updatePost', res.data) })
   }
 }
 
