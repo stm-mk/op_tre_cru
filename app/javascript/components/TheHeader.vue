@@ -16,6 +16,7 @@
               v-bind="attrs"
               v-on="on"
               :to="{name: item.url}"
+              :id="item.id"
             >
               <v-icon large>{{ item.icon }}</v-icon>
             </v-btn>
@@ -32,6 +33,7 @@
               v-bind="attrs"
               v-on="on"
               width="70"
+              id="mypage-btn"
             >
               <v-icon large>mdi-account-circle</v-icon>
             </v-btn>
@@ -47,6 +49,7 @@
               @click.native="handleLogout"
               to="#"
               width="70"
+              id="logout-btn"
             >
               <v-icon large>mdi-logout</v-icon>
             </v-btn>
@@ -124,8 +127,8 @@ export default {
         { title: 'フィードバック送信', icon: 'mdi-send', url: '#'}
       ],
       items: [
-        { title: 'ログイン', icon: 'mdi-login', url: 'LoginIndex'},
-        { title: 'サインイン', icon: 'mdi-account-plus', url: 'RegisterIndex'}
+        { title: 'ログイン', icon: 'mdi-login', url: 'LoginIndex', id: 'login-btn'},
+        { title: 'サインイン', icon: 'mdi-account-plus', url: 'RegisterIndex', id: 'singin-btn'}
       ],
       home: {
         title: 'ホーム',
