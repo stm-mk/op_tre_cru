@@ -6,6 +6,7 @@ import TopIndex from '../pages/top/index.vue';
 import ToremaCalculation from '../pages/torema_calculation/index.vue';
 import RegisterIndex from "../pages/register/index";
 import LoginIndex from "../pages/login/index";
+import MyPost from "../pages/myPost/index";
 
 Vue.use(Router)
 
@@ -31,6 +32,11 @@ const router = new Router({
       path: "/login",
       component: LoginIndex,
       name: "LoginIndex",
+    },
+    {
+      path: "/mypost",
+      component: MyPost,
+      name: "MyPostIndex"
     }
   ]
 })
