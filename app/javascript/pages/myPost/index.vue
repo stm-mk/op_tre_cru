@@ -94,7 +94,7 @@
 
       <v-dialog v-model="isVisiblePostEditModal">
         <PostEditModal
-          :post="myPost"
+          :post="postEdit"
           @close-modal="handleClosePostEditModal"
           @update-post="handleUpdatePost"
         />
@@ -122,7 +122,8 @@ export default {
       isVisiblePostCreateModal: false,
       isVisiblePostEditModal: false,
       character1: '超フェス・ルフィ/技/格闘・自由',
-      character2: '超フェス・カイドウ/力/強靭・打突'
+      character2: '超フェス・カイドウ/力/強靭・打突',
+      postEdit: {}
     }
   },
   computed: {
@@ -159,10 +160,12 @@ export default {
       this.isVisiblePostCreateModal = false;
     },
     handleShowPostEditModal() {
+      this.postEdit = this.myPost
       this.isVisiblePostEditModal = true;
     },
     handleClosePostEditModal () {
       this.isVisiblePostEditModal = false;
+      this.postEdit = {};
     },
     async handleCreatePost(post) {
       try {
