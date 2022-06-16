@@ -122,8 +122,7 @@ export default {
       isVisiblePostCreateModal: false,
       isVisiblePostEditModal: false,
       character1: '超フェス・ルフィ/技/格闘・自由',
-      character2: '超フェス・カイドウ/力/強靭・打突',
-      myPost: {}
+      character2: '超フェス・カイドウ/力/強靭・打突'
     }
   },
   computed: {
@@ -133,11 +132,8 @@ export default {
     ...mapGetters("posts", [
       'posts'
     ]),
-    setMyPost() {
-      this.posts.filter(post => {
-        return post.user_id == this.authUser.id
-      })
-      return this.myPost = this.posts[0]
+    myPost() {
+      return this.$store.getters['posts/getMyPost'](this.authUser.id)
     }
   },
   created() {

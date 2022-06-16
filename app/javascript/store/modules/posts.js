@@ -5,7 +5,10 @@ const state = {
 }
 
 const getters = {
-  posts: state => state.posts
+  posts: state => state.posts,
+  getMyPost: (state) => (id) => {
+    return state.posts.find(post => post.user_id === id)
+  }
 }
 
 const mutations = {
@@ -26,7 +29,8 @@ const mutations = {
     state.posts = state.posts.filter(post => {
       return post.id != deletePost.id
     })
-  }
+  },
+
 }
 
 const actions = {
