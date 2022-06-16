@@ -4,6 +4,7 @@
       <v-card
         class="mx-auto my-12"
         width="400"
+        id="login-form"
       >
         <v-card-title class="grey grey lighten-2">
           ログイン

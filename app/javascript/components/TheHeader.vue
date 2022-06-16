@@ -16,6 +16,7 @@
               v-bind="attrs"
               v-on="on"
               :to="{name: item.url}"
+              :id="item.id"
             >
               <v-icon large>{{ item.icon }}</v-icon>
             </v-btn>
@@ -124,8 +125,8 @@ export default {
         { title: 'フィードバック送信', icon: 'mdi-send', url: '#'}
       ],
       items: [
-        { title: 'ログイン', icon: 'mdi-login', url: 'LoginIndex'},
-        { title: 'サインイン', icon: 'mdi-account-plus', url: 'RegisterIndex'}
+        { title: 'ログイン', icon: 'mdi-login', url: 'LoginIndex', id: 'login-btn'},
+        { title: 'サインイン', icon: 'mdi-account-plus', url: 'RegisterIndex', id: 'singin-btn'}
       ],
       home: {
         title: 'ホーム',
