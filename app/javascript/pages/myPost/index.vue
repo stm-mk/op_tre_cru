@@ -70,7 +70,7 @@
                 rounded
                 text
                 class="mx-2 my-2"
-                @click="handleShowPostCreateModal"
+                @click="handleDeletePost"
               >
                 削除
               </v-btn>
@@ -184,10 +184,9 @@ export default {
         console.log(error)
       }
     },
-    async handleDeletePost(post) {
+    handleDeletePost() {
       try {
-        await this.deletePost(post)
-        this.handleClosePostCreateModal()
+        this.deletePost(this.myPost)
       } catch (error) {
         console.log(error)
       }

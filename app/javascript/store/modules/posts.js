@@ -21,7 +21,11 @@ const mutations = {
     })
 
     state.posts.splice(index, 1, updatePost)
-    
+  },
+  deletePost: (state, deletePost) => {
+    state.posts = state.posts.filter(post => {
+      return post.id != deletePost.id
+    })
   }
 }
 
@@ -41,7 +45,11 @@ const actions = {
   },
   updatePost({commit}, post) {
     return axios.patch(`posts/${post.id}`, post)
-    .then(res => { commit('updatePost', res.data) })
+      .then(res => { commit('updatePost', res.data) })
+  },
+  deletePost({commit}, post) {
+    return axios.delete(`posts/${post.id}`, post)
+      .then(res => { commit('deletePost', res.data)})
   }
 }
 
