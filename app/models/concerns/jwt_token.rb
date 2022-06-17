@@ -4,7 +4,7 @@ module JwtToken
   class_methods do
     # トークンの復号化処理
     def decode(token)
-      JWT.decode(token, Rails.application.secrets.secret_key_base)
+      JWT.decode(token, Rails.application.credentials.secret_key_base)
     end
   end
 
@@ -18,6 +18,6 @@ module JwtToken
 
   # 暗号化処理
   def issue_token(payload)
-    JWT.encode(payload, Rails.application.secrets.secret_key_base)
+    JWT.encode(payload, Rails.application.credentials.secret_key_base)
   end
 end
