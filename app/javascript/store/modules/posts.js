@@ -1,14 +1,16 @@
 import axios from '../../plugins/axions';
 
 const state = {
-  posts: []
+  posts: [],
+  myPost: null
 }
 
 const getters = {
   posts: state => state.posts,
-  getMyPost: (state) => (id) => {
+  /* getMyPost: (state) => (id) => {
     return state.posts.find(post => post.user_id === id)
-  }
+  } */
+  myPost: state => state.myPost
 }
 
 const mutations = {
@@ -30,6 +32,9 @@ const mutations = {
       return post.id != deletePost.id
     })
   },
+  setMyPost: (state, post) => {
+    state.myPost = post
+  }
 
 }
 
@@ -38,6 +43,13 @@ const actions = {
     axios.get('posts')
       .then(res => {
         commit('setPosts', res.data)
+      })
+      .catch(err => console.log(err.response))
+  },
+  fetchMyPost({commit}) {
+    axios.get('my_post')
+      .then(res => {
+        commit('setMyPost', res.data)
       })
       .catch(err => console.log(err.response))
   },

@@ -131,21 +131,18 @@ export default {
       'authUser'
     ]),
     ...mapGetters("posts", [
-      'posts'
-    ]),
-    myPost() {
-      return this.$store.getters['posts/getMyPost'](this.authUser.id)
-    }
+      'myPost'
+    ])
   },
   created() {
-    this.fetchPosts();
+    this.fetchMyPost();
   },
   methods: {
     ...mapActions("posts", [
       'createPost',
-      'fetchPosts',
       'updatePost',
-      'deletePost'
+      'deletePost',
+      'fetchMyPost'
     ]),
     handleShowExplanationModal() {
       this.isVisibleExplanationModal = true;
@@ -160,17 +157,19 @@ export default {
       this.isVisiblePostCreateModal = false;
     },
     handleShowPostEditModal() {
-      this.postEdit = this.myPost
+      this.postEdit = Object.assign({}, this.myPost)
       this.isVisiblePostEditModal = true;
     },
     handleClosePostEditModal () {
       this.isVisiblePostEditModal = false;
+      this.fetchMyPost()
       this.postEdit = {};
     },
     async handleCreatePost(post) {
       try {
         await this.createPost(post)
         this.handleClosePostCreateModal()
+        this.fetchMyPost()
       } catch (error) {
         console.log(error)
       }
@@ -179,13 +178,15 @@ export default {
       try {
         await this.updatePost(post)
         this.handleClosePostEditModal()
+        
       } catch (error) {
         console.log(error)
       }
     },
-    handleDeletePost() {
+    async handleDeletePost() {
       try {
-        this.deletePost(this.myPost)
+        await this.deletePost(this.myPost)
+        this.fetchMyPost();
       } catch (error) {
         console.log(error)
       }
