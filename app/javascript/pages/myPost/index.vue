@@ -162,14 +162,12 @@ export default {
     },
     handleClosePostEditModal () {
       this.isVisiblePostEditModal = false;
-      this.fetchMyPost()
       this.postEdit = {};
     },
     async handleCreatePost(post) {
       try {
         await this.createPost(post)
         this.handleClosePostCreateModal()
-        this.fetchMyPost()
       } catch (error) {
         console.log(error)
       }
@@ -186,7 +184,6 @@ export default {
     async handleDeletePost() {
       try {
         await this.deletePost(this.myPost)
-        this.fetchMyPost();
       } catch (error) {
         console.log(error)
       }

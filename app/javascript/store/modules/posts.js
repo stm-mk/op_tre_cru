@@ -17,25 +17,18 @@ const mutations = {
   setPosts: (state, posts) => {
     state.posts = posts
   },
-  addPost: (state, post) => {
-    state.posts.push(post)
+  addMyPost: (state, post) => {
+    state.myPost = post
   },
-  updatePost: (state, updatePost) => {
-    const index = state.posts.findIndex(post => {
-      return post.id == updatePost.id
-    })
-
-    state.posts.splice(index, 1, updatePost)
+  updateMyPost: (state, updatePost) => {
+    state.myPost = updatePost
   },
-  deletePost: (state, deletePost) => {
-    state.posts = state.posts.filter(post => {
-      return post.id != deletePost.id
-    })
+  deleteMyPost: (state) => {
+    state.myPost = null
   },
   setMyPost: (state, post) => {
     state.myPost = post
   }
-
 }
 
 const actions = {
@@ -56,16 +49,16 @@ const actions = {
   createPost({commit}, post) {
     return axios.post('posts', post)
       .then(res => {
-        commit('addPost', res.data)
+        commit('addMyPost', res.data)
       })
   },
   updatePost({commit}, post) {
     return axios.patch(`posts/${post.id}`, post)
-      .then(res => { commit('updatePost', res.data) })
+      .then(res => { commit('updateMyPost', res.data) })
   },
   deletePost({commit}, post) {
     return axios.delete(`posts/${post.id}`, post)
-      .then(res => { commit('deletePost', res.data)})
+      .then(res => { commit('deleteMyPost')})
   }
 }
 
