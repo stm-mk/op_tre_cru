@@ -36,7 +36,8 @@ const router = new Router({
     {
       path: "/mypost",
       component: MyPost,
-      name: "MyPostIndex"
+      name: "MyPostIndex",
+      meta: { requiredAuth: true }
     }
   ]
 })

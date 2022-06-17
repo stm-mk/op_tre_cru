@@ -81,7 +81,9 @@ RSpec.describe 'ユーザー機能', type: :system do
     end
 
     it 'フレンド募集要項に遷移したら、ログインページにリダイレクトされる' do
-
+      visit root_path
+      find('#my-post-card').click
+      expect(page).to have_current_path('/login')
     end
   end
 

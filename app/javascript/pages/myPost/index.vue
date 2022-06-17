@@ -4,7 +4,7 @@
       <v-row no-gutters>
         <v-col cols="12"
         >
-          <v-card>
+          <v-card id="my-post-detail-modal">
             <v-toolbar class="title" elevation="2">
               フレンド募集要項作成
               <v-spacer></v-spacer>
@@ -26,7 +26,7 @@
                   <v-text-field v-model="myPost.title" label="Title" readonly></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
-                  <v-text-field v-model="myPost.friend_level" label="Friend Lvel" suffix="レベル" readonly></v-text-field>
+                  <v-text-field v-model="myPost.friend_level" label="Friend Level" suffix="レベル" readonly></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field v-model="character2" label="募集キャラクター" readonly></v-text-field>
