@@ -28,7 +28,7 @@
                       size="164"
                       circle
                     >
-                      <v-img :src="authUser.avatar_url"></v-img>
+                      <v-img :src="user.avatar_url"></v-img>
                     </v-avatar>
                   </v-row>
                   <v-row justify="center">
@@ -136,6 +136,7 @@ export default {
 
       try {
         this.updateUser(formData)
+        if (this.uploadAvatar) this.$router.go({path: this.$router.currentRoute.path, force: true})
       } catch (error) {
         console.log(error);
       }
