@@ -12,12 +12,12 @@ class Api::UsersController < ApplicationController
 
   # ログインユーザー情報を返すエンドポイント
   def me
-    render json: current_user
+    render json: current_user, methods: [:avatar_url]
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :game_id, :level, :avatar)
   end
 end

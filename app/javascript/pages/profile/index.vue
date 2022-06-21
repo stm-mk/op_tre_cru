@@ -28,20 +28,29 @@
                       size="164"
                       circle
                     >
-                      <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+                      <v-img :src="user.avatar_url"></v-img>
                     </v-avatar>
+                  </v-row>
+                  <v-row justify="center">
+                    <v-col cols="8">
+                      <v-file-input
+                        label="Avatar"
+                        accept="image/*"
+                        @change="handleChange"
+                      ></v-file-input>
+                    </v-col>
                   </v-row>
                 </v-col>
                 <v-col cols="12" sm="8" md="6">
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field v-model="authUser.name" label="Title" readonly></v-text-field>
+                      <v-text-field v-model="user.name" label="Title"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="authUser.game_id" label="ID" readonly></v-text-field>
+                      <v-text-field v-model="user.game_id" label="ID"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="authUser.level" label="Friend Level" suffix="レベル" readonly></v-text-field>
+                      <v-text-field v-model="user.level" label="Friend Level" suffix="レベル" readonly></v-text-field>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -56,6 +65,7 @@
                 rounded
                 text
                 class="mx-2 my-2"
+                @click="update"
               >
                 編集
               </v-btn>
@@ -76,23 +86,47 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: "ProfileIndex",
   data() {
     return {
-      user: ""
+      user: {
+        name: '',
+        level: '',
+        game_id: '',
+        avatar_url: ''
+      },
+      uploadAvatar: ''
     }
   },
   computed: {
     ...mapGetters("users", ["authUser"])
+  },
+  created() {
+    this.user = Object.assign({}, this.authUser)
+  },
+  methods: {
+    ...mapActions("users", ["updateUser"]),
+    async handleChange(event) {
+      const { valid } = await this.$refs.provider.validate(event)
+      if (valid) this.uploadAvatar = event.target.files[0]
+    },
+    update() {
+      const formData = new FormData()
+      formData.append("user[name]", this.user.name)
+      formData.append("user[avatar]", this.uploadAvatar)
+
+      try {
+        this.updateUser(formData)
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-.avatar-image {
-  align-items: center;
-}
 </style>
