@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_21_083501) do
+ActiveRecord::Schema.define(version: 2022_06_21_174923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,9 @@ ActiveRecord::Schema.define(version: 2022_06_21_083501) do
     t.string "salt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "play_style", default: 1
+    t.integer "level", default: 0
+    t.integer "game_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

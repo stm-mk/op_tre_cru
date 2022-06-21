@@ -28,7 +28,7 @@
                       size="164"
                       circle
                     >
-                      <v-img :src="user.avatar_url"></v-img>
+                      <v-img :src="authUser.avatar_url"></v-img>
                     </v-avatar>
                   </v-row>
                   <v-row justify="center">
@@ -50,7 +50,15 @@
                       <v-text-field v-model="user.game_id" label="ID"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="user.level" label="Friend Level" suffix="レベル" readonly></v-text-field>
+                      <v-text-field v-model="user.level" label="Friend Level" suffix="レベル"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-select
+                        v-model="user.play_style" 
+                        label="Play Style" 
+                        value="value" 
+                        item-text="label"
+                        :items="items"></v-select>
                     </v-col>
                   </v-row>
                 </v-col>
@@ -96,9 +104,14 @@ export default {
         name: '',
         level: '',
         game_id: '',
-        avatar_url: ''
+        avatar_url: '',
+        play_style: ''
       },
-      uploadAvatar: ''
+      uploadAvatar: '',
+      items: [
+        { label: 'エンジョイ', value: 'enjoy' },
+        { label: 'ガチ', value: 'gachi' }
+      ]
     }
   },
   computed: {
@@ -110,13 +123,16 @@ export default {
   methods: {
     ...mapActions("users", ["updateUser"]),
     async handleChange(event) {
-      const { valid } = await this.$refs.provider.validate(event)
-      if (valid) this.uploadAvatar = event.target.files[0]
+      // const { valid } = await this.$refs.provider.validate(event)
+      this.uploadAvatar = event
     },
     update() {
       const formData = new FormData()
       formData.append("user[name]", this.user.name)
-      formData.append("user[avatar]", this.uploadAvatar)
+      if (this.user.game_id) formData.append("user[game_id]", this.user.game_id)
+      if (this.user.level) formData.append("user[level]", this.user.level)
+      if (this.user.play_style) formData.append("user[play_style]", this.user.play_style)
+      if (this.uploadAvatar) formData.append("user[avatar]", this.uploadAvatar)
 
       try {
         this.updateUser(formData)
