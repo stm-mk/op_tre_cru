@@ -46,8 +46,16 @@
               v-bind="attrs"
               width="70"
               v-on="on"
+              :to="{ name: 'ProfileIndex' }"
             >
-              <v-icon large>
+              <v-avatar v-if="authUser.avatar_url"
+                class="profile"
+                size="40"
+                circle
+              >
+                <v-img :src="authUser.avatar_url" />
+              </v-avatar>
+              <v-icon large v-else>
                 mdi-account-circle
               </v-icon>
             </v-btn>

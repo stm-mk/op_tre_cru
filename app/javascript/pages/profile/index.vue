@@ -33,13 +33,19 @@
                   md="4"
                 >
                   <v-row justify="center">
-                    <v-avatar
-                      class="profile avatar-image"
-                      color="grey"
+                    <v-avatar v-if="user.avatar_url"
+                      class="profile"
                       size="164"
                       circle
                     >
                       <v-img :src="user.avatar_url" />
+                    </v-avatar>
+                    <v-avatar v-else
+                      class="profile"
+                      size="164"
+                      circle
+                    >
+                      <v-img :src="noimage_src" />
                     </v-avatar>
                   </v-row>
                   <v-row justify="center">
@@ -149,7 +155,8 @@ export default {
       items: [
         { label: 'エンジョイ', value: 'enjoy' },
         { label: 'ガチ', value: 'gachi' }
-      ]
+      ],
+      noimage_src: require("../../../assets/images/noimage.jpg")
     }
   },
   computed: {
