@@ -166,9 +166,9 @@ export default {
     update() {
       const formData = new FormData()
       formData.append("user[name]", this.user.name)
-      if (this.user.game_id) formData.append("user[game_id]", this.user.game_id)
-      if (this.user.level) formData.append("user[level]", this.user.level)
-      if (this.user.play_style) formData.append("user[play_style]", this.user.play_style)
+      formData.append("user[game_id]", this.user.game_id)
+      formData.append("user[level]", this.user.level)
+      formData.append("user[play_style]", this.user.play_style)
       if (this.uploadAvatar) formData.append("user[avatar]", this.uploadAvatar)
 
       try {
