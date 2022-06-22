@@ -1,10 +1,13 @@
 <template>
   <v-main class="grey lighten-2">
-    <v-container fluid fill-height>
+    <v-container
+      fluid
+      fill-height
+    >
       <v-card
+        id="register-form"
         class="mx-auto my-12"
         width="400"
-        id="register-form"
       >
         <v-card-title class="grey grey lighten-2">
           ユーザー登録
@@ -50,7 +53,7 @@
         </v-card-text>
         
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
             outlined
             rounded

@@ -1,22 +1,42 @@
 <template>
   <v-main class="grey lighten-2">
-    <v-container fluid fill-height>
+    <v-container
+      fluid
+      fill-height
+    >
       <v-row no-gutters>
-        <v-col cols="12" sm="12" md="6">
+        <v-col
+          cols="12"
+          sm="12"
+          md="6"
+        >
           <h2>トレクル</h2>
           <h2>フレンド（仮）</h2>
         </v-col>
-        <v-col cols="12" sm="12" md="6">
+        <v-col
+          cols="12"
+          sm="12"
+          md="6"
+        >
           <v-row no-gutters>
-            <v-col cols="12"
+            <v-col
               v-for="card in cards"
               :key="card.title"
+              cols="12"
             >
-              <v-card elevation="6"  class="mt-4" :id="card.id + '-card'" :to="{name: card.url}" style="height: 150px;">
+              <v-card
+                :id="card.id + '-card'"
+                elevation="6"
+                class="mt-4"
+                :to="{name: card.url}"
+                style="height: 150px;"
+              >
                 <v-card-title class="my-2">
                   {{ card.title }}
-                  <v-spacer></v-spacer>
-                  <v-icon large>{{ card.icon }}</v-icon>
+                  <v-spacer />
+                  <v-icon large>
+                    {{ card.icon }}
+                  </v-icon>
                 </v-card-title>
                 <v-card-subtitle>{{ card.subtitle }}</v-card-subtitle>
               </v-card>

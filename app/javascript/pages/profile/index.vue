@@ -1,13 +1,20 @@
 <template>
   <v-main class="grey lighten-2">
-    <v-container fluid fill-height>
+    <v-container
+      fluid
+      fill-height
+    >
       <v-row no-gutters>
-        <v-col cols="12"
+        <v-col
+          cols="12"
         >
           <v-card>
-            <v-toolbar class="title" elevation="2">
+            <v-toolbar
+              class="title"
+              elevation="2"
+            >
               マイページ
-              <v-spacer></v-spacer>
+              <v-spacer />
               <v-btn
                 fab
                 dark
@@ -20,7 +27,11 @@
 
             <v-card-text>
               <v-row class="mt-2">
-                <v-col cols="12" sm="4" md="4">
+                <v-col
+                  cols="12"
+                  sm="4"
+                  md="4"
+                >
                   <v-row justify="center">
                     <v-avatar
                       class="profile avatar-image"
@@ -28,7 +39,7 @@
                       size="164"
                       circle
                     >
-                      <v-img :src="user.avatar_url"></v-img>
+                      <v-img :src="user.avatar_url" />
                     </v-avatar>
                   </v-row>
                   <v-row justify="center">
@@ -37,35 +48,62 @@
                         label="Avatar"
                         accept="image/*"
                         @change="handleChange"
-                      ></v-file-input>
+                      />
                     </v-col>
                   </v-row>
                 </v-col>
-                <v-col cols="12" sm="8" md="6">
+                <v-col
+                  cols="12"
+                  sm="8"
+                  md="6"
+                >
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field v-model="user.name" label="Title"></v-text-field>
+                      <v-text-field
+                        v-model="user.name"
+                        label="Title"
+                      />
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="user.game_id" label="ID"></v-text-field>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
+                      <v-text-field
+                        v-model="user.game_id"
+                        label="ID"
+                      />
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="user.level" label="Friend Level" suffix="レベル"></v-text-field>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
+                      <v-text-field
+                        v-model="user.level"
+                        label="Friend Level"
+                        suffix="レベル"
+                      />
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
                       <v-select
                         v-model="user.play_style" 
                         label="Play Style" 
                         value="value" 
                         item-text="label"
-                        :items="items"></v-select>
+                        :items="items"
+                      />
                     </v-col>
                   </v-row>
                 </v-col>
               </v-row>
             </v-card-text>
 
-            <v-divider></v-divider>
+            <v-divider />
 
             <v-card-actions>
               <v-btn
