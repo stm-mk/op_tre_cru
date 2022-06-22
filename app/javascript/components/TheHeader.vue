@@ -82,7 +82,7 @@
         </v-tooltip>
       </v-toolbar-items>
 
-      <v-toolbar-items class="hidden-md-and-up">
+      <v-toolbar-items class="hidden-md-and-up" v-if="!authUser">
         <v-menu dark>
           <template v-slot:activator="{ on }">
             <v-btn
@@ -109,6 +109,63 @@
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar-items>
+
+      <v-toolbar-items class="hidden-md-and-up" v-else>
+        <v-menu dark>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              icon
+              v-on="on"
+            >
+              <v-avatar v-if="authUser.avatar_url"
+                class="profile"
+                size="40"
+                circle
+              >
+                <v-img :src="authUser.avatar_url" />
+              </v-avatar>
+              <v-icon large v-else>
+                mdi-account-circle
+              </v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item
+              :to="{ name: 'ProfileIndex' }"
+            >
+              <v-list-item-icon>
+                <v-icon
+                  large
+                  color="white"
+                >
+                  mdi-account-multiple
+                </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>マイページ</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item
+              to="#"
+              @click.native="handleLogout"
+            >
+              <v-list-item-icon>
+                <v-icon
+                  large
+                  color="white"
+                >
+                  mdi-logout
+                </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>ログアウト</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
