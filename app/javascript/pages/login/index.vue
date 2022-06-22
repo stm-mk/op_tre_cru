@@ -1,10 +1,13 @@
 <template>
   <v-main class="grey lighten-2">
-    <v-container fluid fill-height>
+    <v-container
+      fluid
+      fill-height
+    >
       <v-card
+        id="login-form"
         class="mx-auto my-12"
         width="400"
-        id="login-form"
       >
         <v-card-title class="grey grey lighten-2">
           ログイン
@@ -35,7 +38,7 @@
         </v-card-text>
         
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
             outlined
             rounded

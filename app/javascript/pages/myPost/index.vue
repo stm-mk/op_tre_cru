@@ -1,13 +1,20 @@
 <template>
   <v-main class="grey lighten-2">
-    <v-container fluid fill-height>
+    <v-container
+      fluid
+      fill-height
+    >
       <v-row no-gutters>
-        <v-col cols="12"
+        <v-col
+          cols="12"
         >
           <v-card id="my-post-detail-modal">
-            <v-toolbar class="title" elevation="2">
+            <v-toolbar
+              class="title"
+              elevation="2"
+            >
               フレンド募集要項作成
-              <v-spacer></v-spacer>
+              <v-spacer />
               <v-btn
                 fab
                 dark
@@ -20,19 +27,47 @@
             </v-toolbar>
 
             <v-card-text v-if="myPost">
-              <h3 class="mt-4">フレンド募集要項詳細</h3>
+              <h3 class="mt-4">
+                フレンド募集要項詳細
+              </h3>
               <v-row class="mt-2">
                 <v-col cols="12">
-                  <v-text-field v-model="myPost.title" label="Title" readonly></v-text-field>
+                  <v-text-field
+                    v-model="myPost.title"
+                    label="Title"
+                    readonly
+                  />
                 </v-col>
-                <v-col cols="12" sm="6" md="6">
-                  <v-text-field v-model="myPost.friend_level" label="Friend Level" suffix="レベル" readonly></v-text-field>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-text-field
+                    v-model="myPost.friend_level"
+                    label="Friend Level"
+                    suffix="レベル"
+                    readonly
+                  />
                 </v-col>
-                <v-col cols="12" sm="6" md="6">
-                  <v-text-field v-model="character2" label="募集キャラクター" readonly></v-text-field>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-text-field
+                    v-model="character2"
+                    label="募集キャラクター"
+                    readonly
+                  />
                 </v-col>
                 <v-col cols="12">
-                  <v-textarea v-model="myPost.description" label="あいさつ" auto-grow readonly></v-textarea>
+                  <v-textarea
+                    v-model="myPost.description"
+                    label="あいさつ"
+                    auto-grow
+                    readonly
+                  />
                 </v-col>
               </v-row>
             </v-card-text>
@@ -41,7 +76,7 @@
               <h3>フレンド募集要項がありません。</h3>
             </v-card-text>
 
-            <v-divider></v-divider>
+            <v-divider />
         
             <v-card-actions v-if="!myPost">
               <v-btn
