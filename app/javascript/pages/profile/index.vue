@@ -67,7 +67,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="user.name"
-                        label="Title"
+                        label="Name"
                       />
                     </v-col>
                     <v-col
@@ -87,7 +87,7 @@
                     >
                       <v-text-field
                         v-model="user.level"
-                        label="Friend Level"
+                        label="Level"
                         suffix="レベル"
                       />
                     </v-col>
@@ -119,15 +119,7 @@
                 class="mx-2 my-2"
                 @click="update"
               >
-                編集
-              </v-btn>
-              <v-btn
-                outlined
-                rounded
-                text
-                class="mx-2 my-2"
-              >
-                削除
+                更新
               </v-btn>
             </v-card-actions>
           </v-card>

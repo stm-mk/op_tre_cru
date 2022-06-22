@@ -8,7 +8,7 @@ RSpec.describe "ポスト管理", type: :system do
     page.driver.browser.manage.window.resize_to(1280, 720)
   end
 
-  fdescribe 'myPostについて' do
+  describe 'myPostについて' do
     before { login_as(user) }
     it 'トップページからタスクページに遷移できる' do
       visit root_path

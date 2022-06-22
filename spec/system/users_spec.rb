@@ -76,10 +76,6 @@ RSpec.describe 'ユーザー機能', type: :system do
       expect(page).to have_current_path('/'), 'タスクページに遷移できていません'
     end
 
-    it 'マイページに遷移したら、ログインページにリダイレクトされる' do
-
-    end
-
     it 'フレンド募集要項に遷移したら、ログインページにリダイレクトされる' do
       visit root_path
       find('#my-post-card').click
@@ -87,7 +83,7 @@ RSpec.describe 'ユーザー機能', type: :system do
     end
   end
 
-  context 'ログイン後' do
+  fcontext 'ログイン後' do
     before do
       login_as(user)
     end
@@ -103,6 +99,20 @@ RSpec.describe 'ユーザー機能', type: :system do
       find('#logout-btn').click
       expect(page).to have_selector("#login-btn")
       expect(page).to have_current_path('/')
+    end
+
+    it 'プロフィール編集ができる' do
+      visit '/mypage'
+      fill_in 'Name', with: 'テストユーザー'
+      fill_in 'ID', with: '123456789'
+      fill_in 'Level', with: '500'
+      # file_path = Rails.root.join('spec', 'fixtures', 'images', 'pipo-boss001.png')
+      # attach_file('avatar_form', file_path)
+      click_button '更新'
+      # expect(page).to have_selector("img[src$='pipo-boss001.png']")
+      expect(page).to have_field 'Name', with: 'テストユーザー'
+      expect(page).to have_field 'Level', with: '500'
+      expect(page).to have_field 'ID', with: '123456789'
     end
   end
 end
