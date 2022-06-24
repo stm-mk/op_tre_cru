@@ -13,6 +13,7 @@ import App from '../app.vue'
 import router from '../router'
 import axios from '../plugins/axions'
 import store from '../store'
+import '../plugins/veevalidate'
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
