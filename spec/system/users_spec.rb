@@ -7,7 +7,8 @@ RSpec.describe 'ユーザー機能', type: :system do
     page.driver.browser.manage.window.resize_to(1280, 720)
   end
 
-  context 'ログイン前' do
+  fcontext 'ログイン前' do
+=begin
     it '未ログイン状態でヘッダーに「ユーザー登録」、「ログイン」ボタンが表示されている' do
       visit root_path
       expect(page).to have_selector('#login-btn')
@@ -81,9 +82,47 @@ RSpec.describe 'ユーザー機能', type: :system do
       find('#my-post-card').click
       expect(page).to have_current_path('/login')
     end
+=end
+
+    it 'ユーザー登録フォームでバリデーションが機能していること' do
+      visit root_path
+      find('#singin-btn').click
+      within "#register-form" do
+        fill_in 'Name*', with: ' '
+        expect(page).to have_content('名前は必須項目です')
+        fill_in 'Email*', with: ' '
+        expect(page).to have_content('メールアドレスは必須項目です')
+        fill_in 'Email*', with: 'password'
+        expect(page).to have_content('メールアドレスの形式で入力してください')
+        fill_in 'Password*', with: ' '
+        expect(page).to have_content('パスワードは必須項目です')
+        fill_in 'Password（確認）*', with: ' '
+        expect(page).to have_content('確認用パスワードは必須項目です')
+        fill_in 'Password（確認）*', with: 'aa'
+        expect(page).to have_content('確認用パスワードは6文字以上で入力してください')
+        fill_in 'Password*', with: 'password'
+        fill_in 'Password（確認）*', with: 'passwordpassword'
+        expect(page).to have_content('パスワードと一致しません')
+      end
+    end
+
+    it 'ログインフォームでバリデーションが機能していること' do
+      visit root_path
+      find('#login-btn').click
+      within "#login-form" do
+        fill_in 'Email*', with: ' '
+        expect(page).to have_content('メールアドレスは必須項目です')
+        fill_in 'Email*', with: 'password'
+        expect(page).to have_content('メールアドレスの形式で入力してください')
+        fill_in 'Password*', with: ' '
+        expect(page).to have_content('パスワードは必須項目です')
+        fill_in 'Password*', with: 'aa'
+        expect(page).to have_content('パスワードは6文字以上で入力してください')
+      end
+    end
   end
 
-  fcontext 'ログイン後' do
+  context 'ログイン後' do
     before do
       login_as(user)
     end
