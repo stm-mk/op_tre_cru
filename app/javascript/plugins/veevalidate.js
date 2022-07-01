@@ -3,6 +3,7 @@ import { extend, ValidationProvider, ValidationObserver } from 'vee-validate'
 import {
   email,
   required,
+  numeric
 } from 'vee-validate/dist/rules'
 
 Vue.component('ValidationObserver', ValidationObserver)
@@ -26,6 +27,14 @@ extend('min', {
   message: '{_field_}は{length}文字以上で入力してください'
 });
 
+extend('max', {
+  validate(value, { length }) {
+    return value.length <= length;
+  },
+  params: ['length'],
+  message: '{_field_}は{length}文字以下で入力してください'
+});
+
 extend('password_confirmed', {
   params: ['target'],
   validate(value, { target }) {
@@ -33,3 +42,8 @@ extend('password_confirmed', {
   },
   message: 'パスワードと一致しません'
 });
+
+extend('numeric', {
+  ...numeric,
+  message: '{_field_}は数字のみ使用できます'
+})
