@@ -9,119 +9,175 @@
           cols="12"
         >
           <v-card>
-            <v-toolbar
-              class="title"
-              elevation="2"
-            >
-              マイページ
-              <v-spacer />
-              <v-btn
-                fab
-                dark
-                small
-                class="ml-4"
+            <ValidationObserver v-slot="{ invalid }">
+              <v-toolbar
+                class="title"
+                elevation="2"
               >
-                <v-icon>mdi-help</v-icon>
-              </v-btn>
-            </v-toolbar>
-
-            <v-card-text>
-              <v-row class="mt-2">
-                <v-col
-                  cols="12"
-                  sm="4"
-                  md="4"
+                マイページ
+                <v-spacer />
+                <v-btn
+                  fab
+                  dark
+                  small
+                  class="ml-4"
                 >
-                  <v-row justify="center">
-                    <v-avatar v-if="user.avatar_url"
-                      class="profile"
-                      size="164"
-                      circle
-                    >
-                      <v-img :src="user.avatar_url" />
-                    </v-avatar>
-                    <v-avatar v-else
-                      class="profile"
-                      size="164"
-                      circle
-                    >
-                      <v-img :src="noimage_src" />
-                    </v-avatar>
-                  </v-row>
-                  <v-row justify="center">
-                    <v-col cols="8">
-                      <v-file-input
-                        label="Avatar"
-                        accept="image/*"
-                        @change="handleChange"
-                      />
-                    </v-col>
-                  </v-row>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="8"
-                  md="6"
+                  <v-icon>mdi-help</v-icon>
+                </v-btn>
+              </v-toolbar>
+
+              <v-card-text>
+                <v-row class="mt-2">
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="4"
+                  >
+                    <v-row justify="center">
+                      <v-avatar v-if="user.avatar_url"
+                        class="profile"
+                        size="164"
+                        circle
+                      >
+                        <v-img :src="user.avatar_url" />
+                      </v-avatar>
+                      <v-avatar v-else
+                        class="profile"
+                        size="164"
+                        circle
+                      >
+                        <v-img :src="noimage_src" />
+                      </v-avatar>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col cols="8">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          ref="provider"
+                          name="アバター"
+                          rules="image"
+                        >
+                          <v-file-input
+                            label="Avatar"
+                            accept="image/*"
+                            @change="handleChange"
+                            :error-messages="errors"
+                          />
+                        </ValidationProvider>
+
+                        <small class="text-center">*アバターを反映させる為には、リロードを実行してください</small>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="8"
+                    md="6"
+                  >
+                    <v-row>
+                      <v-col cols="12">
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          name="名前"
+                        >
+                          <v-text-field
+                            v-model="user.name"
+                            label="Name"
+                            :error-messages="errors"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+
+                      <v-col
+                        cols="12"
+                        sm="6"
+                        md="6"
+                      >
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="numeric"
+                          name="ID"
+                        >
+                          <v-text-field
+                            v-model="user.game_id"
+                            label="ID"
+                            :error-messages="errors"
+                            type="number"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+
+                      <v-col
+                        cols="12"
+                        sm="6"
+                        md="6"
+                      >
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="max_value:2000"
+                          name="レベル"
+                        >
+                          <v-text-field
+                            v-model="user.level"
+                            label="Level"
+                            suffix="レベル"
+                            type="number"
+                            :error-messages="errors"
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                      
+                      <v-col
+                        cols="12"
+                        sm="6"
+                        md="6"
+                      >
+                        <ValidationProvider
+                          v-slot="{ errors }"
+                          rules="required"
+                          name="プレイスタイル"
+                        >
+                          <v-select
+                            v-model="user.play_style" 
+                            label="Play Style" 
+                            value="value" 
+                            item-text="label"
+                            :items="items"
+                            :error-messages="errors"
+                            required
+                          />
+                        </ValidationProvider>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+
+              <v-divider />
+
+              <v-card-actions>
+                <v-btn
+                  outlined
+                  rounded
+                  text
+                  class="mx-2 my-2"
+                  @click="update"
+                  :disabled="invalid"
                 >
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field
-                        v-model="user.name"
-                        label="Name"
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="6"
-                    >
-                      <v-text-field
-                        v-model="user.game_id"
-                        label="ID"
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="6"
-                    >
-                      <v-text-field
-                        v-model="user.level"
-                        label="Level"
-                        suffix="レベル"
-                      />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="6"
-                    >
-                      <v-select
-                        v-model="user.play_style" 
-                        label="Play Style" 
-                        value="value" 
-                        item-text="label"
-                        :items="items"
-                      />
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-            </v-card-text>
-
-            <v-divider />
-
-            <v-card-actions>
-              <v-btn
-                outlined
-                rounded
-                text
-                class="mx-2 my-2"
-                @click="update"
-              >
-                更新
-              </v-btn>
-            </v-card-actions>
+                  更新
+                </v-btn>
+                <v-btn
+                  outlined
+                  rounded
+                  text
+                  class="mx-2 my-2"
+                  @click="reload"
+                >
+                  リロード
+                </v-btn>
+              </v-card-actions>
+            </ValidationObserver>
           </v-card>
         </v-col>
       </v-row>
@@ -160,23 +216,29 @@ export default {
   methods: {
     ...mapActions("users", ["updateUser"]),
     async handleChange(event) {
-      // const { valid } = await this.$refs.provider.validate(event)
       this.uploadAvatar = event
     },
     update() {
       const formData = new FormData()
       formData.append("user[name]", this.user.name)
-      if (this.user.game_id) formData.append("user[game_id]", this.user.game_id)
-      if (this.user.level) formData.append("user[level]", this.user.level)
-      if (this.user.play_style) formData.append("user[play_style]", this.user.play_style)
+      formData.append("user[game_id]", this.user.game_id)
+      formData.append("user[level]", this.user.level)
+      formData.append("user[play_style]", this.user.play_style)
       if (this.uploadAvatar) formData.append("user[avatar]", this.uploadAvatar)
 
       try {
         this.updateUser(formData)
-        if (this.uploadAvatar) this.$router.go({path: this.$router.currentRoute.path, force: true})
+        this.flashMessage.success({
+            message: 'プロフィールを更新しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+        })
       } catch (error) {
         console.log(error);
       }
+    },
+    reload() {
+      this.$router.go({path: this.$router.currentRoute.path, force: true})
     }
   }
 }

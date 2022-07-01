@@ -8,7 +8,7 @@ class Api::SessionsController < ApplicationController
       render json: { token: token }
     else
       # 401エラーを返す
-      haed :unauthorized
+      head :unauthorized
     end
   end
 end

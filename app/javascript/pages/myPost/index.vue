@@ -203,6 +203,11 @@ export default {
       try {
         await this.createPost(post)
         this.handleClosePostCreateModal()
+        this.flashMessage.success({
+            message: 'フレンド募集要項を作成しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+        })
       } catch (error) {
         console.log(error)
       }
@@ -211,7 +216,11 @@ export default {
       try {
         await this.updatePost(post)
         this.handleClosePostEditModal()
-        
+        this.flashMessage.success({
+            message: 'フレンド募集要項を更新しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+        })
       } catch (error) {
         console.log(error)
       }
@@ -219,6 +228,11 @@ export default {
     async handleDeletePost() {
       try {
         await this.deletePost(this.myPost)
+        this.flashMessage.success({
+            message: 'フレンド募集要項を削除しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+        })
       } catch (error) {
         console.log(error)
       }

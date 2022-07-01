@@ -42,10 +42,10 @@ RSpec.describe "ポスト管理", type: :system do
     it 'タイトル・フレンドレベル・あいさつを入力して「追加」をクリックしたら新しいタスクが追加されている' do
       visit '/mypost'
       click_button('新規作成')
-      fill_in 'Title', with: 'フレンド募集'
+      fill_in 'Title*', with: 'フレンド募集'
       fill_in 'Friend Level', with: '300'
       fill_in 'あいさつ', with: 'よろしくお願いします'
-      click_on '追加'
+      click_button '追加'
       expect(page).to_not have_selector('#posst-create-modal')
       within "#my-post-detail-modal" do
         expect(page).to have_field 'Title', with: 'フレンド募集'
@@ -54,13 +54,15 @@ RSpec.describe "ポスト管理", type: :system do
       end
     end
   
+=begin
     it 'タイトルを入力せず「追加」をクリックしたら新しいポストが追加されず、モーダルも閉じない' do
       visit '/mypost'
       click_button('新規作成')
       sleep 0.5
-      click_on '追加'
+      click_button '追加'
       expect(page).to have_selector('#post-create-modal')
     end
+=end
 
     it 'ポストが存在する場合「編集」ボタン、「削除」ボタンが表示されていること' do
       create(:post, title: 'テスト１', description: '本文１', user: user)
@@ -78,10 +80,10 @@ RSpec.describe "ポスト管理", type: :system do
       sleep 0.5 # Bootstrapのモーダル対応
       expect(page).to have_selector("#my-post-edit-modal")
       within "#my-post-edit-modal" do
-        fill_in 'Title', with: 'フレンド募集'
+        fill_in 'Title*', with: 'フレンド募集'
         fill_in 'Friend Level', with: '300'
         fill_in 'あいさつ', with: 'よろしくお願いします'
-        click_on '更新'
+        click_button '更新'
       end
       sleep 0.5 # Bootstrapのモーダル対応
       expect(page).to_not have_selector("#my-post-edit-modal")
@@ -101,6 +103,39 @@ RSpec.describe "ポスト管理", type: :system do
         expect(page).to_not have_field 'あいさつ', with: '本文１'
         expect(page).to have_content('フレンド募集要項がありません。')
       end
+    end
+
+    it 'タスク追加フォームでバリデーションが機能していること' do
+      visit '/mypost'
+      click_button '新規作成'
+      fill_in 'Title*', with: ' '
+      expect(page).to have_content('タイトルは必須項目です')
+      fill_in 'Title*', with: 'a' * 31
+      expect(page).to have_content('タイトルは30文字以下で入力してください')
+      fill_in 'Friend Level', with: '2001'
+      expect(page).to have_content('フレンドレベルは2000以下でなければなりません')
+      fill_in 'あいさつ', with: 'a' * 1001
+      expect(page).to have_content('あいさつは1000文字以下で入力してください')
+      expect(page).to have_selector("#post-create-modal")
+    end
+
+    it 'ポスト編集フォームでバリデーションが機能していること' do
+      my_post = create(:post, title: '自分のタスク', user: user)
+      visit '/mypost'
+      click_button '編集'
+  
+      within "#my-post-edit-modal" do
+        fill_in 'Title*', with: ' '
+        expect(page).to have_content('タイトルは必須項目です')
+        fill_in 'Title*', with: 'a' * 31
+        expect(page).to have_content('タイトルは30文字以下で入力してください')
+        fill_in 'Friend Level', with: '2001'
+        expect(page).to have_content('フレンドレベルは2000以下でなければなりません')
+        fill_in 'あいさつ', with: 'a' * 1001
+        expect(page).to have_content('あいさつは1000文字以下で入力してください')
+      end
+  
+      expect(page).to have_selector("#my-post-edit-modal")
     end
   end
 end

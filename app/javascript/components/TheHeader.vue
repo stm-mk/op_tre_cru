@@ -247,6 +247,11 @@ export default {
       try {
         await this.logoutUser()
         this.$router.push({name: 'TopIndex'})
+        this.flashMessage.success({
+            message: 'ログアウトしました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+        })
       } catch (error) {
         console.log(error)
       }
