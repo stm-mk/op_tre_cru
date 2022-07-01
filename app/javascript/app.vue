@@ -1,6 +1,7 @@
 <template>
   <v-app id="app">
     <Header class="md-auto" />
+    <FlashMessage :position="'right top'" id="flashMessage" />
     <router-view />
     <Footer class="md-auto" />
   </v-app>
@@ -19,5 +20,8 @@ export default {
 </script>
 
 <style scoped>
+#flashMessage {
+  z-index: 1001;
+}
 </style>
 

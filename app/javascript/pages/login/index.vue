@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'LoginIndes',
@@ -86,6 +86,11 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters("users", [
+      "flash"
+    ])
+  },
   methods: {
     ...mapActions("users", [
       "loginUser"
@@ -94,8 +99,20 @@ export default {
       try {
         await this.loginUser(this.user)
         this.$router.push({ name: "TopIndex" })
+        this.flashMessage.success({
+            message: 'ログインに成功しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+        });
       } catch (error) {
-        console.log(error);
+        // console.log(error.response.status);
+        if (error.response.status == 401) {
+          this.flashMessage.error({
+            message: 'ログインに失敗しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+          });
+        }
       }
     }
   }

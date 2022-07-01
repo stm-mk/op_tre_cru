@@ -64,6 +64,8 @@
                             :error-messages="errors"
                           />
                         </ValidationProvider>
+
+                        <small class="text-center">*アバターを反映させる為には、リロードを実行してください</small>
                       </v-col>
                     </v-row>
                   </v-col>
@@ -113,7 +115,7 @@
                       >
                         <ValidationProvider
                           v-slot="{ errors }"
-                          rules="max_value:2000|numeric"
+                          rules="max_value:2000"
                           name="レベル"
                         >
                           <v-text-field
@@ -164,6 +166,15 @@
                   :disabled="invalid"
                 >
                   更新
+                </v-btn>
+                <v-btn
+                  outlined
+                  rounded
+                  text
+                  class="mx-2 my-2"
+                  @click="reload"
+                >
+                  リロード
                 </v-btn>
               </v-card-actions>
             </ValidationObserver>
@@ -217,10 +228,17 @@ export default {
 
       try {
         this.updateUser(formData)
-        if (this.uploadAvatar) this.$router.go({path: this.$router.currentRoute.path, force: true})
+        this.flashMessage.success({
+            message: 'プロフィールを更新しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+        })
       } catch (error) {
         console.log(error);
       }
+    },
+    reload() {
+      this.$router.go({path: this.$router.currentRoute.path, force: true})
     }
   }
 }

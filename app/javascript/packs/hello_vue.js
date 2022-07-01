@@ -14,11 +14,13 @@ import router from '../router'
 import axios from '../plugins/axions'
 import store from '../store'
 import '../plugins/veevalidate'
+import FlashMessage from '@smartweb/vue-flash-message';
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 
 Vue.use(Vuetify)
+Vue.use(FlashMessage)
 const vuetify = new Vuetify({
   icons: {
     iconfont: 'mdi'
