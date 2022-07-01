@@ -29,7 +29,7 @@
             >
               <ValidationProvider
                 v-slot="{ errors }"
-                rules="max:4|numeric"
+                rules="max_value:2000"
                 name="フレンドレベル"
               >
                 <v-text-field

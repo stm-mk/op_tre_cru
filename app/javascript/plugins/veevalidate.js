@@ -3,7 +3,9 @@ import { extend, ValidationProvider, ValidationObserver } from 'vee-validate'
 import {
   email,
   required,
-  numeric
+  numeric,
+  image,
+  max_value
 } from 'vee-validate/dist/rules'
 
 Vue.component('ValidationObserver', ValidationObserver)
@@ -46,4 +48,14 @@ extend('password_confirmed', {
 extend('numeric', {
   ...numeric,
   message: '{_field_}は数字のみ使用できます'
-})
+});
+
+extend('image', {
+  ...image,
+  message: '{_field_}は画像形式で入力してください'
+});
+
+extend('max_value', {
+  ...max_value,
+  message: '{_field_}は2000以下でなければなりません'
+});
