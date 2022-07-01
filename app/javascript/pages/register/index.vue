@@ -141,9 +141,21 @@ export default {
       this.$axios.post('users', { user: this.user })
         .then(res => {
           this.$router.push({ name: 'LoginIndex' })
+          this.flashMessage.success({
+            message: 'ユーザー登録に成功しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+        });
         })
-        .catch(err => {
-          console.log(err)
+        .catch(error => {
+          // console.log(error.response.status)
+          if (error.response.status == 400) {
+          this.flashMessage.error({
+            message: 'ユーザー登録に失敗しました',
+            time: 5000,
+            blockClass: 'custom-block-class'
+          });
+        }
         })
     }
   }
