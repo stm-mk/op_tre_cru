@@ -8,7 +8,7 @@
       >
         <v-col>
           <v-text-field
-            v-model="searchPost"
+            v-model="searchPost.title"
             label="検索ワード"
             type="text"
           >
@@ -27,21 +27,44 @@
           multiple
         >
           <v-expansion-panel>
-            <v-expansion-panel-header>Panel 1</v-expansion-panel-header>
+            <v-expansion-panel-header>海賊レベルを選択</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-text-field
+                    v-model="searchPost.level"
+                    label="あなたの海賊レベル"
+                    suffix="レベル"
+                  />
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-text-field
+                    v-model="searchPost.friend_level"
+                    label="フレンド海賊レベル"
+                    suffix="レベル"
+                  />
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+
+          <v-expansion-panel>
+            <v-expansion-panel-header>キャラクターを選択</v-expansion-panel-header>
             <v-expansion-panel-content>
               Some content
             </v-expansion-panel-content>
           </v-expansion-panel>
 
           <v-expansion-panel>
-            <v-expansion-panel-header>Panel 2</v-expansion-panel-header>
-            <v-expansion-panel-content>
-              Some content
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-
-          <v-expansion-panel>
-            <v-expansion-panel-header>Panel 3</v-expansion-panel-header>
+            <v-expansion-panel-header>タグを選択</v-expansion-panel-header>
             <v-expansion-panel-content>
               Some content
             </v-expansion-panel-content>
@@ -70,14 +93,20 @@ export default {
   data() {
     return {
       noimage_src: require("../../../assets/images/noimage.jpg"),
-      searchPost: ""
+      searchPost: {
+        title: "",
+        level: "",
+        friend_level: ""
+      }
     }
   },
   computed: {
     ...mapGetters("posts", ["posts"]),
     filteredPosts() {
       return this.posts.filter(post => {
-        return post.title.indexOf(this.searchPost) != -1
+        return post.title.indexOf(this.searchPost.title) != -1 &&
+        post.friend_level >= this.searchPost.level &&
+        post.user.level >= this.searchPost.friend_level
       })
     }
   },
