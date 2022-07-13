@@ -30,18 +30,21 @@
             sm="5"
             md="3"
           >
-            <strong v-html="post.user.name"></strong>
+            <strong
+              v-html="post.user.name"
+            />
             <span
               class="grey--text"
             >
-              &nbsp;({{ post.user.level }})
+              &nbsp;{{ post.user.level }}レベル
             </span>
           </v-col>
 
           <v-col
             class="text-no-wrap"
-            cols="5"
-            sm="3"
+            cols="12"
+            sm="12"
+            md="8"
           >
             <v-chip
               v-if="post.user.play_style == 'gachi'"
@@ -80,6 +83,54 @@
         <v-divider></v-divider>
         <v-card-text>
           <h3 class="mt-4">
+            ユーザー情報
+          </h3>
+          <v-row class="mt-2">
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+            >
+              <v-text-field
+                v-model="post.user.level"
+                label="Level"
+                suffix="レベル"
+                readonly
+              />
+            </v-col>
+            <v-col
+              cols="11"
+              sm="5"
+              md="5"
+            >
+              <v-text-field
+                v-model="post.user.game_id"
+                label="Game ID"
+                readonly
+                :id="'post-user-game-id-' + post.id"
+              />
+              
+            </v-col>
+            <v-col
+              cols="1"
+            >
+              <v-icon
+                @click="copyToClipboard(post.user.game_id)"
+              >
+                mdi-content-copy
+              </v-icon>
+            </v-col>
+            <v-col
+              cols="12"
+            >
+              <v-text-field
+                label="所持キャラクター"
+                readonly
+              />
+            </v-col>
+          </v-row>
+
+          <h3 class="mt-4">
             フレンド募集要項詳細
           </h3>
           <v-row class="mt-2">
@@ -108,7 +159,6 @@
               md="6"
             >
               <v-text-field
-                v-model="character2"
                 label="募集キャラクター"
                 readonly
               />
@@ -139,6 +189,11 @@ export default {
         type: Object,
         required: true
       }
+    }
+  },
+  methods: {
+    copyToClipboard(text) {
+      this.$emit('copy-clipboard', text)
     }
   }
 }

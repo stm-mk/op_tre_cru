@@ -5,6 +5,7 @@
 
       <PostList
         :posts="posts"
+        @copy-clipboard="copyToClipboard"
       />
     </v-row>
   </v-container>
@@ -34,7 +35,24 @@ export default {
   methods: {
     ...mapActions("posts", [
       "fetchPosts",
-    ])
+    ]),
+    copyToClipboard(text) {
+      navigator.clipboard.writeText(text)
+      .then(() => {
+        this.flashMessage.success({
+          message: 'Game IDをコピーしました',
+          time: 5000,
+          blockClass: 'custom-block-class'
+      });
+      })
+      .catch(e => {
+        this.flashMessage.error({
+          message: 'コピーに失敗しました',
+          time: 5000,
+          blockClass: 'custom-block-class'
+        });
+      })
+    }
   }
 }
 </script>

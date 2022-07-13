@@ -3,6 +3,6 @@ class PostSerializer < ActiveModel::Serializer
   has_one :user
 
   class UserSerializer < ActiveModel::Serializer
-    attributes %i[name avatar_url level play_style]
+    attributes %i[name avatar_url level play_style game_id]
   end
 end
