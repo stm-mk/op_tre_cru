@@ -12,7 +12,7 @@
           no-gutters
         >
           <v-col
-            cols="4"
+            cols="2"
             sm="2"
             md="1"
           >
@@ -21,22 +21,20 @@
             >
               <img
                 alt="Avatar"
-                src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+                :src="post.user.avatar_url"
               >
             </v-avatar>
           </v-col>
 
           <v-col
-            class="hidden-xs-only"
             sm="5"
             md="3"
           >
-            <strong v-html="post.title"></strong>
+            <strong v-html="post.user.name"></strong>
             <span
-              v-if="post.description"
               class="grey--text"
             >
-              &nbsp;({{ post.description }})
+              &nbsp;({{ post.user.level }})
             </span>
           </v-col>
 
@@ -46,6 +44,24 @@
             sm="3"
           >
             <v-chip
+              v-if="post.user.play_style == 'gachi'"
+              :color="`red lighten-4`"
+              class="ml-0 mr-2 black--text"
+              label
+              small
+            >
+              ガチ
+            </v-chip>
+            <v-chip
+              v-if="post.user.play_style == 'enjoy'"
+              :color="`blue lighten-4`"
+              class="ml-0 mr-2 black--text"
+              label
+              small
+            >
+              エンジョイ
+            </v-chip>
+            <v-chip
               :color="`teal lighten-4`"
               class="ml-0 mr-2 black--text"
               label
@@ -53,7 +69,7 @@
             >
               Tag
             </v-chip>
-            <strong v-html="post.title"></strong>
+            <strong class="hidden-xs-only" v-html="post.title"></strong>
           </v-col>
 
           
@@ -62,8 +78,51 @@
 
       <v-expansion-panel-content>
         <v-divider></v-divider>
-        <v-card-text
-          v-text="post.description"></v-card-text>
+        <v-card-text>
+          <h3 class="mt-4">
+            フレンド募集要項詳細
+          </h3>
+          <v-row class="mt-2">
+            <v-col cols="12">
+              <v-text-field
+                v-model="post.title"
+                label="Title"
+                readonly
+              />
+            </v-col>
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+            >
+              <v-text-field
+                v-model="post.friend_level"
+                label="Friend Level"
+                suffix="レベル"
+                readonly
+              />
+            </v-col>
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+            >
+              <v-text-field
+                v-model="character2"
+                label="募集キャラクター"
+                readonly
+              />
+            </v-col>
+            <v-col cols="12">
+              <v-textarea
+                v-model="post.description"
+                label="あいさつ"
+                auto-grow
+                readonly
+              />
+            </v-col>
+          </v-row>
+        </v-card-text>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
@@ -75,7 +134,11 @@ export default {
   props: {
     posts: {
       type: Array,
-      required: true
+      required: true,
+      user: {
+        type: Object,
+        required: true
+      }
     }
   }
 }

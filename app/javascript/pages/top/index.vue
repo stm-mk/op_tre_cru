@@ -55,7 +55,7 @@ export default {
       cards: [
         { title: 'トレマ周回数計算', id: 'torema-calculation', icon: 'mdi-calculator', url: 'ToremaCalculation', subtitle: '倍率・所持キャラからトレマ周回数を計算することができます。'},
         { title: 'フレンド募集要項', id: 'my-post', icon: 'mdi-card-account-details', url: 'MyPostIndex', subtitle: 'フレンド募集要項を作成することができます。この機能には、ユーザー登録が必要です。'},
-        { title: 'フレンド検索', id: 'list', icon: 'mdi-magnify', url: '#', subtitle: 'フレンドを検索することができます。'},
+        { title: 'フレンド検索', id: 'list', icon: 'mdi-magnify', url: 'PostIndex', subtitle: 'フレンドを検索することができます。'},
         { title: 'フェス限データ', id: 'characters', icon: 'mdi-database', url: '#', subtitle: 'フェス限データを閲覧することができます。'},
       ]
     }

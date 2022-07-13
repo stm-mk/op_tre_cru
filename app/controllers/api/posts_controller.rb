@@ -4,18 +4,18 @@ class Api::PostsController < ApplicationController
 
   def index
     @posts = Post.all
-    render json: @posts
+    render json: @posts, each_serializer: PostSerializer
   end
 
   def show
-    render json: @post
+    render json: @post, each_serializer: PostSerializer
   end
 
   def create
     @post = current_user.build_post(post_params)
 
     if @post.save
-      render json: @post
+      render json: @post, each_serializer: PostSerializer
     else
       render json: @post.errors, status: :bad_request
     end
@@ -23,7 +23,7 @@ class Api::PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      render json: @post
+      render json: @post, each_serializer: PostSerializer
     else
       render json: @post.errors, status: :bad_request
     end
