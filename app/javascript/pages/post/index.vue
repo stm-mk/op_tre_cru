@@ -1,10 +1,57 @@
 <template>
   <v-container fluid>
     <v-row justify="center">
-      <v-subheader>Today</v-subheader>
+
+      <v-row
+        class="mx-4 mt-2"
+        id="search-form"
+      >
+        <v-col>
+          <v-text-field
+            v-model="searchPost"
+            label="検索ワード"
+            type="text"
+          >
+            <template v-slot:append-outer>
+              <v-btn 
+                icon
+              >
+                <v-icon>mdi-magnify</v-icon>
+              </v-btn>
+            </template>
+          </v-text-field>
+        </v-col>
+
+        <v-expansion-panels
+          popout
+          multiple
+        >
+          <v-expansion-panel>
+            <v-expansion-panel-header>Panel 1</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              Some content
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+
+          <v-expansion-panel>
+            <v-expansion-panel-header>Panel 2</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              Some content
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+
+          <v-expansion-panel>
+            <v-expansion-panel-header>Panel 3</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              Some content
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-row>
 
       <PostList
-        :posts="posts"
+        class="my-8"
+        :posts="filteredPosts"
         @copy-clipboard="copyToClipboard"
       />
     </v-row>
@@ -23,11 +70,16 @@ export default {
   data() {
     return {
       noimage_src: require("../../../assets/images/noimage.jpg"),
-      lorem: 'Lorem ipsum dolor sit amet, at aliquam vivendum vel, everti delicatissimi cu eos. Dico iuvaret debitis mel an, et cum zril menandri. Eum in consul legimus accusam. Ea dico abhorreant duo, quo illum minimum incorrupte no, nostro voluptaria sea eu. Suas eligendi ius at, at nemore equidem est. Sed in error hendrerit, in consul constituam cum.',
+      searchPost: ""
     }
   },
   computed: {
     ...mapGetters("posts", ["posts"]),
+    filteredPosts() {
+      return this.posts.filter(post => {
+        return post.title.indexOf(this.searchPost) != -1
+      })
+    }
   },
   created() {
     this.fetchPosts();

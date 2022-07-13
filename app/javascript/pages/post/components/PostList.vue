@@ -99,26 +99,24 @@
               />
             </v-col>
             <v-col
-              cols="11"
-              sm="5"
-              md="5"
+              cols="12"
+              sm="6"
+              md="6"
             >
               <v-text-field
                 v-model="post.user.game_id"
                 label="Game ID"
                 readonly
                 :id="'post-user-game-id-' + post.id"
-              />
-              
-            </v-col>
-            <v-col
-              cols="1"
-            >
-              <v-icon
-                @click="copyToClipboard(post.user.game_id)"
               >
-                mdi-content-copy
-              </v-icon>
+                <template v-slot:append-outer>
+                  <v-icon
+                    @click="copyToClipboard(post.user.game_id)"
+                  >
+                    mdi-content-copy
+                  </v-icon>
+                </template>
+              </v-text-field>
             </v-col>
             <v-col
               cols="12"
