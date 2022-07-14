@@ -30,7 +30,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'faker'
   gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'pg', '~> 1.1'
@@ -67,3 +66,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'sorcery'
 gem 'active_model_serializers'
+gem 'faker'
