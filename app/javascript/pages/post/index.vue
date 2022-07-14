@@ -76,7 +76,7 @@
 
       <PostList
         class="my-8"
-        :posts="this.displayPosts"
+        :posts="filteredPosts"
         @copy-clipboard="copyToClipboard"
       />
 
@@ -145,7 +145,7 @@ export default {
     length() {
       return Math.ceil(this.filteredPosts.length / this.pageSize)
     },
-    set() {
+    setDisplayPosts() {
       this.displayPosts = this.filteredPosts.slice(0,this.pageSize)
     }
   },
