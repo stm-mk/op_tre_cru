@@ -1,21 +1,21 @@
 class Api::PostsController < ApplicationController
-  before_action :authenticate!
+  before_action :authenticate!, only: %i[create update destroy]
   before_action :set_post, only: %i[show update destroy]
 
   def index
-    @posts = Post.all
-    render json: @posts
+    @posts = Post.order(updated_at: :desc)
+    render json: @posts, each_serializer: PostSerializer
   end
 
   def show
-    render json: @post
+    render json: @post, each_serializer: PostSerializer
   end
 
   def create
     @post = current_user.build_post(post_params)
 
     if @post.save
-      render json: @post
+      render json: @post, each_serializer: PostSerializer
     else
       render json: @post.errors, status: :bad_request
     end
@@ -23,7 +23,7 @@ class Api::PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      render json: @post
+      render json: @post, each_serializer: PostSerializer
     else
       render json: @post.errors, status: :bad_request
     end
