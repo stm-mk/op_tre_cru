@@ -147,7 +147,7 @@ export default {
     },
     setDisplayPosts() {
       this.displayPosts = this.filteredPosts.slice(0,this.pageSize)
-      console.log()
+      console.log("")
     }
   },
   created() {
