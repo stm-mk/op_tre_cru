@@ -8,15 +8,17 @@
       >
         <v-col>
           <v-text-field
-            v-model="searchPost.title"
+            v-model="searchPost.keyword"
             label="検索ワード"
             type="text"
           >
             <template v-slot:append-outer>
               <v-btn 
-                icon
+                @click="resetBtn"
+                text
+                outlined
               >
-                <v-icon>mdi-magnify</v-icon>
+                リセット
               </v-btn>
             </template>
           </v-text-field>
@@ -94,7 +96,7 @@ export default {
     return {
       noimage_src: require("../../../assets/images/noimage.jpg"),
       searchPost: {
-        title: "",
+        keyword: "",
         level: "",
         friend_level: ""
       }
@@ -103,10 +105,15 @@ export default {
   computed: {
     ...mapGetters("posts", ["posts"]),
     filteredPosts() {
-      return this.posts.filter(post => {
-        return post.title.indexOf(this.searchPost.title) != -1 &&
-        post.friend_level >= this.searchPost.level &&
+      return this.filteredPostsKeyword.filter(post => {
+        return post.friend_level <= this.searchPost.level &&
         post.user.level >= this.searchPost.friend_level
+      })
+    },
+    filteredPostsKeyword() {
+      return this.posts.filter(post => {
+        return post.title.indexOf(this.searchPost.keyword) != -1 ||
+        post.description.indexOf(this.searchPost.keyword) != -1
       })
     }
   },
@@ -132,6 +139,16 @@ export default {
           time: 5000,
           blockClass: 'custom-block-class'
         });
+      })
+    },
+    resetBtn() {
+      this.searchPost.keyword = ""
+      this.searchPost.level = ""
+      this.searchPost.friend_level = ""
+      this.flashMessage.success({
+        message: 'リセットしました',
+        time: 5000,
+        blockClass: 'custom-block-class'
       })
     }
   }
