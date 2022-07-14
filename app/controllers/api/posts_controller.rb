@@ -3,7 +3,7 @@ class Api::PostsController < ApplicationController
   before_action :set_post, only: %i[show update destroy]
 
   def index
-    @posts = Post.all
+    @posts = Post.order(updated_at: :desc)
     render json: @posts, each_serializer: PostSerializer
   end
 

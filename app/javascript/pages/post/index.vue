@@ -76,9 +76,27 @@
 
       <PostList
         class="my-8"
-        :posts="filteredPosts"
+        :posts="this.displayPosts"
         @copy-clipboard="copyToClipboard"
       />
+
+        <v-btn
+          v-show="fab"
+          v-scroll="onScroll"
+          fab
+          dark
+          fixed
+          bottom
+          right
+          @click="toTop"
+        >
+          <v-icon>mdi-arrow-up-bold-outline</v-icon>
+        </v-btn>
+      <v-pagination
+        v-model="page.currentPage"
+        :length="length"
+        @input="pageChange"
+      ></v-pagination>
     </v-row>
   </v-container>
 </template>
@@ -99,11 +117,19 @@ export default {
         keyword: "",
         level: "",
         friend_level: ""
-      }
+      },
+      page: {
+        currentPage: 1
+      },
+      fab: false,
+      pageSize: 20,
+      displayPosts: []
     }
   },
   computed: {
-    ...mapGetters("posts", ["posts"]),
+    ...mapGetters("posts", [
+      "posts"
+    ]),
     filteredPosts() {
       return this.filteredPostsKeyword.filter(post => {
         return post.friend_level <= this.searchPost.level &&
@@ -115,6 +141,12 @@ export default {
         return post.title.indexOf(this.searchPost.keyword) != -1 ||
         post.description.indexOf(this.searchPost.keyword) != -1
       })
+    },
+    length() {
+      return Math.ceil(this.filteredPosts.length / this.pageSize)
+    },
+    set() {
+      this.displayPosts = this.filteredPosts.slice(0,this.pageSize)
     }
   },
   created() {
@@ -122,7 +154,7 @@ export default {
   },
   methods: {
     ...mapActions("posts", [
-      "fetchPosts",
+      "fetchPosts"
     ]),
     copyToClipboard(text) {
       navigator.clipboard.writeText(text)
@@ -150,7 +182,21 @@ export default {
         time: 5000,
         blockClass: 'custom-block-class'
       })
-    }
+    },
+    toTop() {
+      this.$vuetify.goTo(0)
+    },
+    onScroll (e){
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.fab = top > 500
+    },
+    pageChange(pageNumber) {
+      this.displayPosts = this.filteredPosts.slice(
+        this.pageSize*(pageNumber -1),
+        this.pageSize*(pageNumber)
+      )
+    } 
   }
 }
 </script>
