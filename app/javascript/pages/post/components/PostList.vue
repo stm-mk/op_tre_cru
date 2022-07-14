@@ -19,9 +19,13 @@
             <v-avatar
               size="36px"
             >
-              <img
+              <img v-if="post.user.avatar_url"
                 alt="Avatar"
                 :src="post.user.avatar_url"
+              >
+              <img v-else
+                alt="Avatar"
+                :src="noimage_src"
               >
             </v-avatar>
           </v-col>
@@ -179,6 +183,11 @@
 <script>
 export default {
   name: "PostList",
+  data() {
+    return {
+      noimage_src: require("../../../../assets/images/noimage.jpg")
+    }
+  },
   props: {
     posts: {
       type: Array,
