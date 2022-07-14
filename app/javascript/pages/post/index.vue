@@ -146,7 +146,8 @@ export default {
       return Math.ceil(this.filteredPosts.length / this.pageSize)
     },
     setDisplayPosts() {
-      return this.displayPosts = this.filteredPosts.slice(0,this.pageSize)
+      this.displayPosts = this.filteredPosts.slice(0,this.pageSize)
+      console.log()
     }
   },
   created() {
