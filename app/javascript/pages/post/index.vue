@@ -152,6 +152,7 @@ export default {
   watch: {
     setDisplayPosts() {
       this.displayPosts = this.setDisplayPosts
+      this.page.currentPage = 1
     }
   },
   created() {
