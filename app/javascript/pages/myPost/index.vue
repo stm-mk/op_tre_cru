@@ -69,6 +69,20 @@
                     readonly
                   />
                 </v-col>
+
+                <v-col cols="12">
+                  <v-select
+                    v-model="myPost.tags"
+                    :items="tags"
+                    item-text="name"
+                    :item-value="tags.name"
+                    attach
+                    chips
+                    label="Tags"
+                    readonly
+                    multiple
+                  ></v-select>
+                </v-col>
               </v-row>
             </v-card-text>
 
@@ -122,6 +136,7 @@
         
       <v-dialog v-model="isVisiblePostCreateModal">
         <PostCreateModal
+          :tags="tags"
           @close-modal="handleClosePostCreateModal"
           @create-post="handleCreatePost"
         />
@@ -130,6 +145,7 @@
       <v-dialog v-model="isVisiblePostEditModal">
         <PostEditModal
           :post="postEdit"
+          :tags="tags"
           @close-modal="handleClosePostEditModal"
           @update-post="handleUpdatePost"
         />
@@ -167,10 +183,14 @@ export default {
     ]),
     ...mapGetters("posts", [
       'myPost'
-    ])
+    ]),
+    ...mapGetters("tags", [
+      "tags"
+    ]),
   },
   created() {
     this.fetchMyPost();
+    this.fetchTags();
   },
   methods: {
     ...mapActions("posts", [
@@ -178,6 +198,9 @@ export default {
       'updatePost',
       'deletePost',
       'fetchMyPost'
+    ]),
+    ...mapActions("tags", [
+      'fetchTags'
     ]),
     handleShowExplanationModal() {
       this.isVisibleExplanationModal = true;

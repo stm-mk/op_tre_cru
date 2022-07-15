@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :sessions
     resources :my_post
     resources :profile
+    resources :tags
   end
 
   get '*path', to: 'home#index', constraints: lambda { |req|
