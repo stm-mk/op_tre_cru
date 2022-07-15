@@ -146,8 +146,12 @@ export default {
       return Math.ceil(this.filteredPosts.length / this.pageSize)
     },
     setDisplayPosts() {
-      this.displayPosts = this.filteredPosts.slice(0,this.pageSize)
-      return this.displayPosts
+      return this.filteredPosts.slice(0,this.pageSize)
+    }
+  },
+  watch: {
+    setDisplayPosts() {
+      this.displayPosts = this.setDisplayPosts
     }
   },
   created() {
