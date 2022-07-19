@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   has_one :post, dependent: :destroy
   has_one_attached :avatar
+  has_many :user_characters, dependent: :destroy
+  has_many :characters, through: :user_characters
 
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
