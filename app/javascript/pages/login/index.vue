@@ -10,63 +10,68 @@
         width="400"
       >
         <ValidationObserver v-slot="{ invalid }">
-          <v-card-title class="grey grey lighten-2">
-            ログイン
-          </v-card-title>
-
-          <v-card-text>
-            <v-container>
-              <v-row class="mt-2">
-                <v-col cols="12">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    rules="required|email"
-                    name="メールアドレス"
-                  >
-                    <v-text-field 
-                      v-model="user.email" 
-                      label="Email*" 
-                      type="email"
-                      placeholder="test@example.com"
-                      :error-messages="errors"
-                    />
-                  </ValidationProvider>
-                </v-col>
-
-                <v-col cols="12">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    rules="required|min:6"
-                    name="パスワード"
-                  >
-                    <v-text-field 
-                      v-model="user.password" 
-                      label="Password*" 
-                      type="password"
-                      placeholder="password"
-                      :error-messages="errors"
-                    />
-                  </ValidationProvider>
-                </v-col>
-              </v-row>
-            </v-container>
-            <small>*必須項目</small>
-          </v-card-text>
-          
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              outlined
-              rounded
-              text
-              class="mx-2 my-2"
-              type="submit"
-              :disabled="invalid"
-              @click="login"
-            >
+          <form @submit.prevent>
+            <v-card-title class="grey grey lighten-2">
               ログイン
-            </v-btn>
-          </v-card-actions>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row class="mt-2">
+                  <v-col cols="12">
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      rules="required|email"
+                      name="メールアドレス"
+                    >
+                      <v-text-field 
+                        v-model="user.email" 
+                        label="Email*" 
+                        type="email"
+                        placeholder="test@example.com"
+                        :error-messages="errors"
+                        autocomplete="email"
+                        
+                      />
+                    </ValidationProvider>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      rules="required|min:6"
+                      name="パスワード"
+                    >
+                      <v-text-field 
+                        v-model="user.password" 
+                        label="Password*" 
+                        type="password"
+                        placeholder="password"
+                        :error-messages="errors"
+                        autocomplete="new-password"
+                      />
+                    </ValidationProvider>
+                  </v-col>
+                </v-row>
+              </v-container>
+              <small>*必須項目</small>
+            </v-card-text>
+            
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                outlined
+                rounded
+                text
+                class="mx-2 my-2"
+                type="submit"
+                :disabled="invalid"
+                @click="login"
+              >
+                ログイン
+              </v-btn>
+            </v-card-actions>
+          </form>
         </ValidationObserver>
       </v-card>
     </v-container>
