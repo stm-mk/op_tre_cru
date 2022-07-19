@@ -13,8 +13,9 @@ class Api::PostsController < ApplicationController
 
   def create
     @post = current_user.build_post(post_params)
-
+    tag_list = params[:post][:post_tags]
     if @post.save
+      @post.save_posts(tag_list)
       render json: @post, each_serializer: PostSerializer
     else
       render json: @post.errors, status: :bad_request
@@ -23,6 +24,8 @@ class Api::PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
+      tag_list = params[:post][:post_tags]
+      @post.save_posts(tag_list)
       render json: @post, each_serializer: PostSerializer
     else
       render json: @post.errors, status: :bad_request

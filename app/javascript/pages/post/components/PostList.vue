@@ -50,32 +50,38 @@
             sm="12"
             md="8"
           >
-            <v-chip
-              v-if="post.user.play_style == 'gachi'"
-              :color="`red lighten-4`"
-              class="ml-0 mr-2 black--text"
-              label
-              small
+            <v-chip-group
+              column
             >
-              ガチ
-            </v-chip>
-            <v-chip
-              v-if="post.user.play_style == 'enjoy'"
-              :color="`blue lighten-4`"
-              class="ml-0 mr-2 black--text"
-              label
-              small
-            >
-              エンジョイ
-            </v-chip>
-            <v-chip
-              :color="`teal lighten-4`"
-              class="ml-0 mr-2 black--text"
-              label
-              small
-            >
-              Tag
-            </v-chip>
+              <v-chip
+                v-if="post.user.play_style == 'gachi'"
+                :color="`red lighten-4`"
+                class="ml-0 mr-2 black--text"
+                label
+                small
+              >
+                ガチ
+              </v-chip>
+              <v-chip
+                v-if="post.user.play_style == 'enjoy'"
+                :color="`blue lighten-4`"
+                class="ml-0 mr-2 black--text"
+                label
+                small
+              >
+                エンジョイ
+              </v-chip>
+              <v-chip
+                v-for="tag in post.tags"
+                :key="tag.id"
+                :color="`teal lighten-4`"
+                class="ml-0 mr-2 black--text"
+                label
+                small
+              >
+                {{ tag.name }}
+              </v-chip>
+            </v-chip-group>
             <strong class="hidden-xs-only" v-html="post.title"></strong>
           </v-col>
 
@@ -193,6 +199,10 @@ export default {
       type: Array,
       required: true,
       user: {
+        type: Object,
+        required: true
+      },
+      tags: {
         type: Object,
         required: true
       }

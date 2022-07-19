@@ -68,6 +68,19 @@
                 />
               </ValidationProvider>
             </v-col>
+
+            <v-col cols="12">
+              <v-select
+                v-model="post.post_tags"
+                :items="tags"
+                item-text="name"
+                :item-value="tags.name"
+                attach
+                chips
+                label="Tags"
+                multiple
+              ></v-select>
+            </v-col>
           </v-row>
         </v-container>
         <small>*必須項目</small>
@@ -104,8 +117,15 @@
         post: {
           title: '',
           friend_level: '',
-          description: ''
+          description: '',
+          post_tags: []
         }
+      }
+    },
+    props: {
+      tags: {
+        type: Array,
+        required: true
       }
     },
     methods: {

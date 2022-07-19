@@ -68,6 +68,19 @@
                 />
               </ValidationProvider>
             </v-col>
+
+            <v-col cols="12">
+              <v-select
+                v-model="post.tags"
+                :items="tags"
+                item-text="name"
+                :item-value="tags.name"
+                attach
+                chips
+                label="Tags"
+                multiple
+              ></v-select>
+            </v-col>
           </v-row>
         </v-container>
         <small>*必須項目</small>
@@ -118,15 +131,36 @@
         description: {
           type: String,
           required: true
+        },
+        tags: {
+          type: Array,
+          required: true
         }
-    }
+      },
+      tags: {
+        type: Array,
+        required: true
+      }
+    },
+    computed: {
+      editpost: {
+        get() {
+          return {
+            id: this.post.id,
+            title: this.post.title,
+            friend_level: this.post.friend_level,
+            description: this.post.description,
+            post_tags: this.post.tags
+          }
+        }
+      }
     },
     methods: {
       handleCloseModal() {
         this.$emit('close-modal')
       },
       handleUpdatePost() {
-        this.$emit('update-post', this.post)
+        this.$emit('update-post', this.editpost)
       }
     }
   }

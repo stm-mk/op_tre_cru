@@ -47,13 +47,13 @@ const actions = {
       .catch(err => console.log(err.response))
   },
   createPost({commit}, post) {
-    return axios.post('posts', post)
+    return axios.post('posts', {post: post})
       .then(res => {
         commit('addMyPost', res.data)
       })
   },
   updatePost({commit}, post) {
-    return axios.patch(`posts/${post.id}`, post)
+    return axios.patch(`posts/${post.id}`, {post: post})
       .then(res => { commit('updateMyPost', res.data) })
   },
   deletePost({commit}, post) {
