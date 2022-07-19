@@ -69,12 +69,14 @@
               エンジョイ
             </v-chip>
             <v-chip
+              v-for="tag in post.tags"
+              :key="tag.id"
               :color="`teal lighten-4`"
               class="ml-0 mr-2 black--text"
               label
               small
             >
-              Tag
+              {{ tag.name }}
             </v-chip>
             <strong class="hidden-xs-only" v-html="post.title"></strong>
           </v-col>
@@ -193,6 +195,10 @@ export default {
       type: Array,
       required: true,
       user: {
+        type: Object,
+        required: true
+      },
+      tags: {
         type: Object,
         required: true
       }

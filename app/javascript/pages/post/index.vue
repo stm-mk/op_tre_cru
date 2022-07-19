@@ -68,7 +68,21 @@
           <v-expansion-panel>
             <v-expansion-panel-header>タグを選択</v-expansion-panel-header>
             <v-expansion-panel-content>
-              Some content
+              <v-chip-group
+                v-model="searchPost.tag"
+                column
+              >
+                <v-chip
+                  filter
+                  label
+                  :color="`teal lighten-4`"
+                  v-for="tag in tags"
+                  :key="tag.id"
+                  :value="tag.id"
+                >
+                  {{ tag.name }}
+                </v-chip>
+              </v-chip-group>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -116,7 +130,8 @@ export default {
       searchPost: {
         keyword: "",
         level: "",
-        friend_level: ""
+        friend_level: "",
+        tag: ""
       },
       page: {
         currentPage: 1
@@ -130,7 +145,10 @@ export default {
     ...mapGetters("posts", [
       "posts"
     ]),
-    filteredPosts() {
+    ...mapGetters("tags", [
+      "tags"
+    ]),
+    filteredPostsLevel() {
       return this.filteredPostsKeyword.filter(post => {
         return post.friend_level <= this.searchPost.level &&
         post.user.level >= this.searchPost.friend_level
@@ -141,6 +159,15 @@ export default {
         return post.title.indexOf(this.searchPost.keyword) != -1 ||
         post.description.indexOf(this.searchPost.keyword) != -1
       })
+    },
+    filteredPosts() {
+      if(this.searchPost.tag) {
+        return this.filteredPostsLevel.filter(post => {
+          return post.tags.find(tag => tag.id === this.searchPost.tag)
+        })
+      } else {
+        return this.filteredPostsLevel
+      }
     },
     length() {
       return Math.ceil(this.filteredPosts.length / this.pageSize)
@@ -157,10 +184,14 @@ export default {
   },
   created() {
     this.fetchPosts();
+    this.fetchTags();
   },
   methods: {
     ...mapActions("posts", [
       "fetchPosts"
+    ]),
+    ...mapActions("tags", [
+      "fetchTags"
     ]),
     copyToClipboard(text) {
       navigator.clipboard.writeText(text)
@@ -202,7 +233,14 @@ export default {
         this.pageSize*(pageNumber -1),
         this.pageSize*(pageNumber)
       )
-    } 
+    },
+    tagsearch(tag) {
+      console.log(tag)
+      for(var i in this.filteredPosts) {
+        var post = this.filteredPosts[i]
+        console.log(post.tags[0].id)
+      }
+    }
   }
 }
 </script>
