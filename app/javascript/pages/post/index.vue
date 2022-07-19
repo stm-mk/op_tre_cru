@@ -214,6 +214,7 @@ export default {
       this.searchPost.keyword = ""
       this.searchPost.level = ""
       this.searchPost.friend_level = ""
+      this.searchPost.tag = ""
       this.flashMessage.success({
         message: 'リセットしました',
         time: 5000,
