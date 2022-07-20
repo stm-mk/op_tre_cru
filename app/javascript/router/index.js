@@ -9,6 +9,7 @@ import LoginIndex from "../pages/login/index";
 import MyPost from "../pages/myPost/index";
 import ProfileIndex from "../pages/profile/index";
 import PostIndex from "../pages/post/index";
+import CharacterIndex from "../pages/character/index";
 
 Vue.use(Router)
 
@@ -51,6 +52,11 @@ const router = new Router({
       path: "/list",
       component: PostIndex,
       name: "PostIndex"
+    },
+    {
+      path: "/characters",
+      component: CharacterIndex,
+      name: "CharacterIndex"
     }
   ]
 })
