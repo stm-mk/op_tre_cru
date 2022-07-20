@@ -19,7 +19,18 @@ Tag.create!(
   ]
 )
 
-
+Type.create!(
+  [
+    {name: "自由"},
+    {name: "強靭"},
+    {name: "博識"},
+    {name: "野心"},
+    {name: "格闘"},
+    {name: "打突"},
+    {name: "斬撃"},
+    {name: "射撃"},
+  ]
+)
 
 100.times do |index|
   playStyle = ['enjoy', 'gachi'] 
@@ -51,8 +62,10 @@ User.create!(
 )
 
 100.times do |index|
+  types = Type.all
   Character.create!(
     name: "キャラクター#{index}",
-    element: rand(1..5)
+    element: rand(1..5),
+    types: types.sample(2)
   )
 end

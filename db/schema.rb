@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_19_134931) do
+ActiveRecord::Schema.define(version: 2022_07_20_072759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 2022_07_19_134931) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "character_types", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "type_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["character_id", "type_id"], name: "index_character_types_on_character_id_and_type_id", unique: true
+    t.index ["character_id"], name: "index_character_types_on_character_id"
+    t.index ["type_id"], name: "index_character_types_on_type_id"
   end
 
   create_table "characters", force: :cascade do |t|
@@ -76,6 +86,12 @@ ActiveRecord::Schema.define(version: 2022_07_19_134931) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "types", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "user_characters", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "character_id", null: false
@@ -101,6 +117,8 @@ ActiveRecord::Schema.define(version: 2022_07_19_134931) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "character_types", "characters"
+  add_foreign_key "character_types", "types"
   add_foreign_key "post_tags", "posts"
   add_foreign_key "post_tags", "tags"
   add_foreign_key "posts", "users"

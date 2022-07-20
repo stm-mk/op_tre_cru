@@ -76,14 +76,14 @@
               column
             >
               <v-chip
-                v-for="(item,i) in 2"
-                :key="i"
+                v-for="type in character.types"
+                :key="type.name"
                 :color="`teal lighten-4`"
                 class="ml-0 mr-2 black--text"
                 label
                 small
               >
-                タイプ
+                {{ type.name }}
               </v-chip>
             </v-chip-group>
           </v-col>

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :profile
     resources :tags
     resources :characters
+    resources :types
   end
 
   get '*path', to: 'home#index', constraints: lambda { |req|

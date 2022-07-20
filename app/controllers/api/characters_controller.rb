@@ -1,7 +1,7 @@
 class Api::CharactersController < ApplicationController
   def index
     character = Character.order(created_at: :desc)
-    render json: character
+    render json: character, each_serializer: CharacterSerializer
   end
 
   def create
