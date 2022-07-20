@@ -71,7 +71,7 @@
 
             <v-col cols="12">
               <v-select
-                v-model="post.tags"
+                v-model="edittags"
                 :items="tags"
                 item-text="name"
                 :item-value="tags.name"
@@ -112,6 +112,11 @@
 <script>
   export default {
     name: 'PostEditModal',
+    data() {
+      return {
+        edittags: []
+      }
+    },
     props: {
       post: {
         type: Object,
@@ -150,10 +155,13 @@
             title: this.post.title,
             friend_level: this.post.friend_level,
             description: this.post.description,
-            post_tags: this.post.tags
+            post_tags: this.edittags
           }
         }
       }
+    },
+    created() {
+      this.setTags();
     },
     methods: {
       handleCloseModal() {
@@ -161,6 +169,9 @@
       },
       handleUpdatePost() {
         this.$emit('update-post', this.editpost)
+      },
+      setTags() {
+        this.edittags = this.post.tags.map((t) => {return t.name})
       }
     }
   }
