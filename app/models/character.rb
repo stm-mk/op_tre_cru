@@ -3,7 +3,7 @@ class Character < ApplicationRecord
   has_many :users, through: :user_characters
 
   validates :name, uniqueness: true, presence: true
-  validates :attribute, presence: true
+  validates :element, presence: true
 
-  enum attribute: { chikara: 1, soku: 2, waza: 3, kokoro:4, chi: 5 }
+  enum element: { chikara: 1, soku: 2, waza: 3, kokoro:4, chi: 5 }
 end

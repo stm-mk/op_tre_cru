@@ -49,3 +49,10 @@ User.create!(
   password: "test01",
   password_confirmation: "test01"
 )
+
+100.times do |index|
+  Character.create!(
+    name: "キャラクター#{index}",
+    element: rand(1..5)
+  )
+end
