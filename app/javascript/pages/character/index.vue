@@ -35,7 +35,23 @@
                 <v-col
                   cols="12"
                 >
-                  属性を選択
+                  <v-chip-group
+                    v-model="searchCharacter.element"
+                    column
+                  >
+                    <v-chip
+                      filter
+                      large
+                      label
+                      :color="element.color"
+                      v-for="element in elements"
+                      :key="element.name"
+                      :value="element.value"
+                      class="mx-2"
+                    >
+                      {{ element.name }}
+                    </v-chip>
+                  </v-chip-group>
                 </v-col>
               </v-row>
             </v-expansion-panel-content>
@@ -44,7 +60,7 @@
           <v-expansion-panel>
             <v-expansion-panel-header>タイプを選択</v-expansion-panel-header>
             <v-expansion-panel-content>
-              Some content
+              Unimplemented
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -52,6 +68,7 @@
 
       <CharacterList
         class="my-8"
+        :characters="this.displayCharacters"
       />
 
         <v-btn
@@ -68,7 +85,7 @@
         </v-btn>
       <v-pagination
         v-model="page.currentPage"
-        :length="5"
+        :length="length"
         @input="pageChange"
       ></v-pagination>
     </v-row>
@@ -76,6 +93,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import CharacterList from "./components/CharacterList.vue"
 
 export default {
@@ -87,7 +105,7 @@ export default {
     return {
       searchCharacter: {
         keyword: "",
-        attribete: "",
+        element: "",
         type: ""
       },
       page: {
@@ -95,25 +113,57 @@ export default {
       },
       fab: false,
       pageSize: 20,
-      displayPosts: []
+      displayCharacters: [],
+      elements: [
+        { name: "力", value: "chikara", color: "red lighten-4" },
+        { name: "速", value: "soku", color: "blue lighten-4" },
+        { name: "技", value: "waza", color: "green lighten-4" },
+        { name: "心", value: "kokoro", color: "yellow lighten-4" },
+        { name: "知", value: "chi", color: "purple lighten-4" }
+      ]
     }
   },
   computed: {
-
+    ...mapGetters("characters", [
+      "characters"
+    ]),
+    filteredCharacters() {
+      if(this.searchCharacter.element) {
+        return this.filteredCharactersKeyword.filter(character => {
+          return character.element === this.searchCharacter.element
+        })
+      } else {
+        return this.filteredCharactersKeyword
+      }
+    },
+    filteredCharactersKeyword() {
+      return this.characters.filter(character => {
+        return character.name.indexOf(this.searchCharacter.keyword) != -1
+      })
+    },
+    length() {
+      return Math.ceil(this.filteredCharacters.length / this.pageSize)
+    },
+    setDisplayCharacters() {
+      return this.filteredCharacters.slice(0, this.pageSize)
+    }
   },
   watch: {
-    setDisplayPosts() {
+    setDisplayCharacters() {
+      this.displayCharacters = this.setDisplayCharacters
       this.page.currentPage = 1
     }
   },
   created() {
+    this.fetchCharacters();
   },
   methods: {
+    ...mapActions("characters", [
+      "fetchCharacters"
+    ]),
     resetBtn() {
-      this.searchPost.keyword = ""
-      this.searchPost.level = ""
-      this.searchPost.friend_level = ""
-      this.searchPost.tag = ""
+      this.searchCharacter.keyword = ""
+      this.searchCharacter.element = ""
       this.flashMessage.success({
         message: 'リセットしました',
         time: 5000,
@@ -129,7 +179,7 @@ export default {
       this.fab = top > 500
     },
     pageChange(pageNumber) {
-      this.displayPosts = this.filteredPosts.slice(
+      this.displayCharacters = this.filteredCharacters.slice(
         this.pageSize*(pageNumber -1),
         this.pageSize*(pageNumber)
       )

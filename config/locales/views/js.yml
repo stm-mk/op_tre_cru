@@ -1,0 +1,13 @@
+ja:
+  enums:
+    user:
+      play_style:
+        enjoy: "エンジョイ"
+        gachi: "ガチ"
+    character:
+      element:
+        chikara: "力"
+        soku: "速"
+        waza: "技"
+        kokoro: "心"
+        chi: "知"
