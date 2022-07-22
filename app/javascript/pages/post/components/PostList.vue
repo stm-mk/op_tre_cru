@@ -131,10 +131,28 @@
             <v-col
               cols="12"
             >
-              <v-text-field
-                label="所持キャラクター"
+              <v-select
+                v-model="post.user.characters"
+                :items="characters"
+                item-text="name"
+                attach
+                chips
+                label="Characters"
+                multiple
                 readonly
-              />
+              >
+                <template v-slot:selection="{ item, index }">
+                  <v-chip v-if="index === 0">
+                    <span>{{ item.name }}</span>
+                  </v-chip>
+                  <span
+                    v-if="index === 1"
+                    class="grey--text text-caption"
+                  >
+                    (+{{ post.user.characters.length - 1 }} others)
+                  </span>
+                </template>
+              </v-select>
             </v-col>
           </v-row>
 
@@ -200,12 +218,20 @@ export default {
       required: true,
       user: {
         type: Object,
-        required: true
+        required: true,
+        characters: {
+          types: Array,
+          required: true
+        }
       },
       tags: {
-        type: Object,
+        type: Array,
         required: true
       }
+    },
+    characters: {
+      type: Array,
+      required: true
     }
   },
   methods: {

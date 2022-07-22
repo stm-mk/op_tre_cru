@@ -5,6 +5,11 @@ class PostSerializer < ActiveModel::Serializer
 
   class UserSerializer < ActiveModel::Serializer
     attributes %i[name avatar_url level play_style game_id]
+    has_many :characters
+
+    class CharacterSerializer < ActiveModel::Serializer
+      attributes %i[id name element]
+    end
   end
 
   class TagSerializer < ActiveModel::Serializer

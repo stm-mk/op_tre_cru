@@ -3,6 +3,6 @@ class UserSerializer < ActiveModel::Serializer
   has_many :characters
 
   class CharacterSerializer < ActiveModel::Serializer
-    attributes %i[id name]
+    attributes %i[id name element]
   end
 end

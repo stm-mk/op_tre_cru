@@ -4,7 +4,7 @@ class Api::PostsController < ApplicationController
 
   def index
     @posts = Post.order(updated_at: :desc)
-    render json: @posts, each_serializer: PostSerializer
+    render json: @posts, each_serializer: PostSerializer, include: { user: [:characters] }
   end
 
   def show

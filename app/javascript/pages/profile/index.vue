@@ -160,7 +160,19 @@
                           chips
                           label="Characters"
                           multiple
-                        ></v-select>
+                        >
+                          <template v-slot:selection="{ item, index }">
+                            <v-chip v-if="index === 0">
+                              <span>{{ item.name }}</span>
+                            </v-chip>
+                            <span
+                              v-if="index === 1"
+                              class="grey--text text-caption"
+                            >
+                              (+{{ editcharacter.length - 1 }} others)
+                            </span>
+                          </template>
+                        </v-select>
                       </v-col>
                     </v-row>
                   </v-col>
