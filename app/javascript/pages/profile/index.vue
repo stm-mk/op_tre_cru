@@ -149,6 +149,19 @@
                           />
                         </ValidationProvider>
                       </v-col>
+
+                      <v-col cols="12">
+                        <v-select
+                          v-model="editcharacter"
+                          :items="characters"
+                          item-text="name"
+                          :item-value="characters.name"
+                          attach
+                          chips
+                          label="Characters"
+                          multiple
+                        ></v-select>
+                      </v-col>
                     </v-row>
                   </v-col>
                 </v-row>
@@ -197,24 +210,34 @@ export default {
         level: '',
         game_id: '',
         avatar_url: '',
-        play_style: ''
+        play_style: '',
+        characters: []
       },
       uploadAvatar: '',
       items: [
         { label: 'エンジョイ', value: 'enjoy' },
         { label: 'ガチ', value: 'gachi' }
       ],
-      noimage_src: require("../../../assets/images/noimage.jpg")
+      noimage_src: require("../../../assets/images/noimage.jpg"),
+      editcharacter: []
     }
   },
   computed: {
-    ...mapGetters("users", ["authUser"])
+    ...mapGetters("users", [
+      "authUser"
+    ]),
+    ...mapGetters("characters", [
+      "characters"
+    ])
   },
   created() {
     this.user = Object.assign({}, this.authUser)
+    this.fetchCharacters();
+    this.setCharacter();
   },
   methods: {
     ...mapActions("users", ["updateUser"]),
+    ...mapActions("characters", ["fetchCharacters"]),
     async handleChange(event) {
       this.uploadAvatar = event
     },
@@ -224,6 +247,13 @@ export default {
       formData.append("user[game_id]", this.user.game_id)
       formData.append("user[level]", this.user.level)
       formData.append("user[play_style]", this.user.play_style)
+      if(this.editcharacter.length > 0) {
+        this.editcharacter.forEach(character => {
+          formData.append('user[user_characters]' + '[]', character)
+        })
+      } else {
+        formData.append('user[user_characters]' + '[]', [])
+      }
       if (this.uploadAvatar) formData.append("user[avatar]", this.uploadAvatar)
 
       try {
@@ -239,6 +269,9 @@ export default {
     },
     reload() {
       this.$router.go({path: this.$router.currentRoute.path, force: true})
+    },
+    setCharacter() {
+      this.editcharacter = this.user.characters.map((t) => {return t.name})
     }
   }
 }

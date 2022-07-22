@@ -12,7 +12,7 @@ class Api::UsersController < ApplicationController
 
   # ログインユーザー情報を返すエンドポイント
   def me
-    render json: current_user, methods: [:avatar_url]
+    render json: current_user, methods: [:avatar_url], each_serializer: UserSerializer
   end
 
   private
