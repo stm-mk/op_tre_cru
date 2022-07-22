@@ -52,14 +52,29 @@
                 </v-col>
                 <v-col
                   cols="12"
-                  sm="6"
-                  md="6"
                 >
-                  <v-text-field
-                    v-model="character2"
+                  <v-select
+                    v-model="myPost.characters"
+                    :items="characters"
+                    item-text="name"
+                    attach
+                    chips
                     label="募集キャラクター"
+                    multiple
                     readonly
-                  />
+                  >
+                    <template v-slot:selection="{ item, index }">
+                      <v-chip v-if="index === 0">
+                        <span>{{ item.name }}</span>
+                      </v-chip>
+                      <span
+                        v-if="index === 1"
+                        class="grey--text text-caption"
+                      >
+                        (+{{ myPost.characters.length - 1 }} others)
+                      </span>
+                    </template>
+                  </v-select>
                 </v-col>
                 <v-col cols="12">
                   <v-textarea
@@ -137,6 +152,7 @@
       <v-dialog v-model="isVisiblePostCreateModal">
         <PostCreateModal
           :tags="tags"
+          :characters="characters"
           @close-modal="handleClosePostCreateModal"
           @create-post="handleCreatePost"
         />
@@ -146,6 +162,7 @@
         <PostEditModal
           :post="postEdit"
           :tags="tags"
+          :characters="characters"
           @close-modal="handleClosePostEditModal"
           @update-post="handleUpdatePost"
         />
@@ -187,10 +204,14 @@ export default {
     ...mapGetters("tags", [
       "tags"
     ]),
+    ...mapGetters("characters", [
+      "characters"
+    ]),
   },
   created() {
     this.fetchMyPost();
     this.fetchTags();
+    this.fetchCharacters();
   },
   methods: {
     ...mapActions("posts", [
@@ -201,6 +222,9 @@ export default {
     ]),
     ...mapActions("tags", [
       'fetchTags'
+    ]),
+    ...mapActions("characters", [
+      "fetchCharacters"
     ]),
     handleShowExplanationModal() {
       this.isVisibleExplanationModal = true;
