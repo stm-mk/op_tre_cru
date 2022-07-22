@@ -172,6 +172,7 @@
       </v-row>
 
       <PostList
+        id="post-list"
         class="my-8"
         :posts="this.displayPosts"
         :characters="characters"
@@ -350,6 +351,6 @@ export default {
 
 <style scoped>
 #search-form {
-  z-index: 1000;
+  z-index: 2;
 }
 </style>
