@@ -33,8 +33,18 @@ Type.create!(
 )
 
 100.times do |index|
+  types = Type.all
+  Character.create!(
+    name: "キャラクター#{index + 1}",
+    element: rand(1..5),
+    types: types.sample(2)
+  )
+end
+
+100.times do |index|
   playStyle = ['enjoy', 'gachi'] 
   tags = Tag.all
+  characters = Character.all
   count = rand(1..8)
   user = User.create!(
       name: Faker::Name.name,
@@ -43,14 +53,16 @@ Type.create!(
       level: rand(100..1000),
       game_id: rand(100000000..999999999),
       password: "123456",
-      password_confirmation: "123456"
+      password_confirmation: "123456",
+      characters: characters.sample(count)
   )
   Post.create!(
     user: user,
     title: "タイトル#{index}",
     description: "本文#{index}",
     friend_level: rand(100..1000),
-    tags: tags.sample(count)
+    tags: tags.sample(count),
+    characters: characters.sample(count)
   )
 end
 
@@ -60,12 +72,3 @@ User.create!(
   password: "test01",
   password_confirmation: "test01"
 )
-
-100.times do |index|
-  types = Type.all
-  Character.create!(
-    name: "キャラクター#{index}",
-    element: rand(1..5),
-    types: types.sample(2)
-  )
-end

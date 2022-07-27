@@ -3,8 +3,8 @@ class Api::PostsController < ApplicationController
   before_action :set_post, only: %i[show update destroy]
 
   def index
-    @posts = Post.order(updated_at: :desc)
-    render json: @posts, each_serializer: PostSerializer, include: { user: [:characters] }
+    @posts = Post.all.includes({ user: [:characters, avatar_attachment: :blob] }, :tags, :characters).order(updated_at: :desc)
+    render json: @posts, include: '**'
   end
 
   def show

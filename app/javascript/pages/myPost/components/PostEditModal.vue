@@ -52,9 +52,10 @@
                 :item-value="characters.name"
                 attach
                 chips
-                label="募集キャラクター"
+                label="募集キャラクター(最後に選択された３体が表示されます。)"
                 clearable
                 multiple
+                no-data-text="候補が見つかりません。"
               >
                 <template v-slot:selection="data">
                   <v-chip

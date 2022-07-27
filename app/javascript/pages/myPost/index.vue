@@ -62,16 +62,17 @@
                     label="募集キャラクター"
                     multiple
                     readonly
+                    hint="最後に選択された３体が表示されます。"
                   >
                     <template v-slot:selection="{ item, index }">
-                      <v-chip v-if="index === 0">
+                      <v-chip v-if="index < 3">
                         <span>{{ item.name }}</span>
                       </v-chip>
                       <span
-                        v-if="index === 1"
+                        v-if="index === 3"
                         class="grey--text text-caption"
                       >
-                        (+{{ myPost.characters.length - 1 }} others)
+                        (他{{ myPost.characters.length - 3 }}体)
                       </span>
                     </template>
                   </v-select>
@@ -209,7 +210,7 @@ export default {
     ]),
   },
   created() {
-    this.fetchMyPost();
+    if(this.authUser.post) { this.fetchMyPost(); }
     this.fetchTags();
     this.fetchCharacters();
   },

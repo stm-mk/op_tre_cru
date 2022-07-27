@@ -137,19 +137,19 @@
                 item-text="name"
                 attach
                 chips
-                label="Characters"
+                label="所持キャラクター"
                 multiple
                 readonly
               >
                 <template v-slot:selection="{ item, index }">
-                  <v-chip v-if="index === 0">
+                  <v-chip v-if="index < 3">
                     <span>{{ item.name }}</span>
                   </v-chip>
                   <span
-                    v-if="index === 1"
+                    v-if="index === 3"
                     class="grey--text text-caption"
                   >
-                    (+{{ post.user.characters.length - 1 }} others)
+                    (他{{ post.user.characters.length - 3 }}体)
                   </span>
                 </template>
               </v-select>
@@ -181,13 +181,29 @@
             </v-col>
             <v-col
               cols="12"
-              sm="6"
-              md="6"
             >
-              <v-text-field
+              <v-select
+                v-model="post.characters"
+                :items="characters"
+                item-text="name"
+                attach
+                chips
                 label="募集キャラクター"
+                multiple
                 readonly
-              />
+              >
+                <template v-slot:selection="{ item, index }">
+                  <v-chip v-if="index < 3">
+                    <span>{{ item.name }}</span>
+                  </v-chip>
+                  <span
+                    v-if="index === 3"
+                    class="grey--text text-caption"
+                  >
+                    (他{{ post.characters.length - 3 }}体)
+                  </span>
+                </template>
+              </v-select>
             </v-col>
             <v-col cols="12">
               <v-textarea
@@ -225,6 +241,10 @@ export default {
         }
       },
       tags: {
+        type: Array,
+        required: true
+      },
+      characters: {
         type: Array,
         required: true
       }
