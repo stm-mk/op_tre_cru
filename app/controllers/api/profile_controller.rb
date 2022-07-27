@@ -3,10 +3,13 @@ class Api::ProfileController < ApplicationController
 
   def update
     user = User.find(current_user.id)
+    character_list = params[:user][:user_characters]
+    character_list = [] if character_list === [""]
     if user.update(user_params)
+      user.save_user(character_list)
       render json: user, methods: [:avatar_url]
     else
-      render json: user.errors, status: :bad_request
+      render json: user.errors, status: :bad_request, each_serializer: UserSerializer
     end
   end
 

@@ -19,11 +19,32 @@ Tag.create!(
   ]
 )
 
+Type.create!(
+  [
+    {name: "自由"},
+    {name: "強靭"},
+    {name: "博識"},
+    {name: "野心"},
+    {name: "格闘"},
+    {name: "打突"},
+    {name: "斬撃"},
+    {name: "射撃"},
+  ]
+)
 
+100.times do |index|
+  types = Type.all
+  Character.create!(
+    name: "キャラクター#{index + 1}",
+    element: rand(1..5),
+    types: types.sample(2)
+  )
+end
 
 100.times do |index|
   playStyle = ['enjoy', 'gachi'] 
   tags = Tag.all
+  characters = Character.all
   count = rand(1..8)
   user = User.create!(
       name: Faker::Name.name,
@@ -32,14 +53,16 @@ Tag.create!(
       level: rand(100..1000),
       game_id: rand(100000000..999999999),
       password: "123456",
-      password_confirmation: "123456"
+      password_confirmation: "123456",
+      characters: characters.sample(count)
   )
   Post.create!(
     user: user,
     title: "タイトル#{index}",
     description: "本文#{index}",
     friend_level: rand(100..1000),
-    tags: tags.sample(count)
+    tags: tags.sample(count),
+    characters: characters.sample(count)
   )
 end
 

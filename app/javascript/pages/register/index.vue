@@ -10,112 +10,118 @@
         width="400"
       >
         <ValidationObserver v-slot="{ invalid }">
-          <v-card-title class="grey grey lighten-2">
-            ユーザー登録
-          </v-card-title>
+          <form @submit.prevent>
+            <v-card-title class="grey grey lighten-2">
+              ユーザー登録
+            </v-card-title>
 
-          <v-card-text>
-            <v-container>
-              <v-row class="mt-2">
-                <v-col cols="12">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    rules="required"
-                    name="名前"
-                  >
-                    <v-text-field
-                      v-model="user.name" 
-                      label="Name*" 
-                      placeholder="username"
-                      :error-messages="errors"
-                    />
-                  </ValidationProvider>
-                </v-col>
+            <v-card-text>
+              <v-container>
+                <v-row class="mt-2">
+                  <v-col cols="12">
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      rules="required"
+                      name="名前"
+                    >
+                      <v-text-field
+                        v-model="user.name" 
+                        label="Name*" 
+                        placeholder="username"
+                        :error-messages="errors"
+                        autocomplete="name"
+                      />
+                    </ValidationProvider>
+                  </v-col>
 
-                <v-col cols="12">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    rules="required|email"
-                    name="メールアドレス"
-                  >
-                    <v-text-field 
-                      v-model="user.email" 
-                      label="Email*" 
-                      type="email"
-                      placeholder="test@example.com"
-                      :error-messages="errors"
-                    />
-                  </ValidationProvider>
-                </v-col>
+                  <v-col cols="12">
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      rules="required|email"
+                      name="メールアドレス"
+                    >
+                      <v-text-field 
+                        v-model="user.email" 
+                        label="Email*" 
+                        type="email"
+                        placeholder="test@example.com"
+                        :error-messages="errors"
+                        autocomplete="email"
+                      />
+                    </ValidationProvider>
+                  </v-col>
 
-                <v-col cols="12">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    rules="required|min:6"
-                    name="パスワード"
-                    vid="password"
-                  >
-                    <v-text-field 
-                      v-model="user.password" 
-                      label="Password*" 
-                      type="password"
-                      placeholder="password"
-                      :error-messages="errors"
-                    />
-                  </ValidationProvider>
-                </v-col>
+                  <v-col cols="12">
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      rules="required|min:6"
+                      name="パスワード"
+                      vid="password"
+                    >
+                      <v-text-field 
+                        v-model="user.password" 
+                        label="Password*" 
+                        type="password"
+                        placeholder="password"
+                        :error-messages="errors"
+                        autocomplete="new-password"
+                      />
+                    </ValidationProvider>
+                  </v-col>
 
-                <v-col cols="12">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    rules="required|min:6|password_confirmed:@password"
-                    name="確認用パスワード"
-                  >
-                    <v-text-field 
-                      v-model="user.password_confirmation" 
-                      label="Password（確認）*" 
-                      type="password"
-                      placeholder="password"
-                      :error-messages="errors"
-                    />
-                  </ValidationProvider>
-                </v-col>
+                  <v-col cols="12">
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      rules="required|min:6|password_confirmed:@password"
+                      name="確認用パスワード"
+                    >
+                      <v-text-field 
+                        v-model="user.password_confirmation" 
+                        label="Password（確認）*" 
+                        type="password"
+                        placeholder="password"
+                        :error-messages="errors"
+                        autocomplete="new-password"
+                      />
+                    </ValidationProvider>
+                  </v-col>
 
-                <v-col cols="12">
-                  <validation-provider
-                    v-slot="{ errors }"
-                    rules="required"
-                    name="チェック"
-                  >
-                    <v-checkbox
-                      v-model="policyCheck"
-                      :error-messages="errors"
-                      value="1"
-                      label="プライバシーポリシー/利用規約に同意*"
-                      type="checkbox"
-                      required
-                    ></v-checkbox>
-                  </validation-provider>
-                </v-col>
-              </v-row>
-            </v-container>
-            <small>*必須項目</small>
-          </v-card-text>
-          
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              outlined
-              rounded
-              text
-              class="mx-2 my-2"
-              type="submit"
-              @click="register"
-              :disabled="invalid"
-            >
-              登録
-            </v-btn>
-          </v-card-actions>
+                  <v-col cols="12">
+                    <validation-provider
+                      v-slot="{ errors }"
+                      rules="required"
+                      name="チェック"
+                    >
+                      <v-checkbox
+                        v-model="policyCheck"
+                        :error-messages="errors"
+                        value="1"
+                        label="プライバシーポリシー/利用規約に同意*"
+                        type="checkbox"
+                        required
+                      ></v-checkbox>
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+              </v-container>
+              <small>*必須項目</small>
+            </v-card-text>
+            
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                outlined
+                rounded
+                text
+                class="mx-2 my-2"
+                type="submit"
+                @click="register"
+                :disabled="invalid"
+              >
+                登録
+              </v-btn>
+            </v-card-actions>
+          </form>
         </ValidationObserver>
       </v-card>
     </v-container>

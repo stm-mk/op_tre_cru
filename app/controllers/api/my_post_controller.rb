@@ -3,6 +3,6 @@ class Api::MyPostController < ApplicationController
 
   def index
     @post = current_user.post
-    render json: @post
+    render json: @post, each_serializer: PostSerializer
   end
 end
