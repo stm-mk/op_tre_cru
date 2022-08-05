@@ -5,7 +5,8 @@ import {
   required,
   numeric,
   image,
-  max_value
+  max_value,
+  min_value
 } from 'vee-validate/dist/rules'
 
 Vue.component('ValidationObserver', ValidationObserver)
@@ -58,4 +59,9 @@ extend('image', {
 extend('max_value', {
   ...max_value,
   message: '{_field_}は2000以下でなければなりません'
+});
+
+extend('min_value', {
+  ...min_value,
+  message: '{_field_}は1以上でなければなりません'
 });

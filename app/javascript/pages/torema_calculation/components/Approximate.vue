@@ -5,18 +5,23 @@
         cols="12"
       >
         <h4>目標ポイント</h4>
-        <v-autocomplete
-          v-model="TargetPoint"
-          :items="points"
-          item-text="name"
-          item-value="point"
-          attach
-          chips
-          label="目標ポイントを選択してください"
-          no-data-text="候補が見つかりませんでした。"
-          clearable
-        ></v-autocomplete>
-        {{TargetPoint}}
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="required"
+            name="目標ポイント"
+          >
+          <v-autocomplete
+            v-model="TargetPoint"
+            :items="points"
+            item-text="name"
+            item-value="point"
+            attach
+            chips
+            label="目標ポイントを選択してください"
+            no-data-text="候補が見つかりませんでした。"
+            :error-messages="errors"
+          ></v-autocomplete>
+        </ValidationProvider>
       </v-col>
     </v-row>
 
@@ -295,7 +300,7 @@ export default {
       })
     },
     calculation() {
-      this.$emit('calculation-poin', this.approximate, this.subPoint, this.TargetPoint)
+      this.$emit('calculation-point', this.approximate, this.subPoint, this.TargetPoint)
     },
     resetCalculation() {
       this.$emit('reset-calculation')

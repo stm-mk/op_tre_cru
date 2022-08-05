@@ -8,50 +8,57 @@
         <v-col
           cols="12"
         >
-          <v-card id="my-post-detail-modal">
-            <v-toolbar
-              class="title"
-              elevation="2"
-            >
-              トレマ周回数計算
-              <v-spacer />
-              <v-btn
-                fab
-                dark
-                small
-                class="ml-4"
-                @click.stop="handleShowExplanationModal"
+          <v-card
+            rounded="true"
+          >
+            <ValidationObserver>
+              <v-toolbar
+                class="title"
+                elevation="2"
               >
-                <v-icon>mdi-help</v-icon>
-              </v-btn>
-            </v-toolbar>
-            <v-tabs
-              v-model="tab"
-              grow
-            >
-              <v-tab href="#tab-1">
-                概算
-              </v-tab>
-              <v-tab href="#tab-2">
-                精算
-              </v-tab>
-            </v-tabs>
-            <v-tabs-items
-              v-model="tab"
-            >
-              <v-tab-item value="tab-1">
-                <Approximate
-                  @calculation-poin="calculation"
-                  @reset-calculation="resetCalculation"
-                />
-              </v-tab-item>
-              <v-tab-item value="tab-2">
-                <ExactCalculate />
-              </v-tab-item>
-            </v-tabs-items>
+                トレマ周回数計算
+                <v-spacer />
+                <v-btn
+                  fab
+                  dark
+                  small
+                  class="ml-4"
+                  @click.stop="handleShowExplanationModal"
+                >
+                  <v-icon>mdi-help</v-icon>
+                </v-btn>
+              </v-toolbar>
+              <v-tabs
+                v-model="tab"
+                grow
+              >
+                <v-tab href="#tab-1">
+                  概算
+                </v-tab>
+                <v-tab href="#tab-2">
+                  精算
+                </v-tab>
+              </v-tabs>
+              <v-tabs-items
+                v-model="tab"
+              >
+                <v-tab-item value="tab-1">
+                  <Approximate
+                    @calculation-point="calculation"
+                    @reset-calculation="resetCalculation"
+                  />
+                </v-tab-item>
+                <v-tab-item value="tab-2">
+                  <ExactCalculate
+                    @calculation-point="exactCalculation"
+                    @reset-calculation="resetExactCalculation"
+                  />
+                </v-tab-item>
+              </v-tabs-items>
+            </ValidationObserver>
           </v-card>
 
-          <v-card id="my-post-detail-modal">
+          <v-card>
             <v-toolbar
               class="title mt-4"
               elevation="2"
@@ -119,7 +126,48 @@
             </v-card-text>
 
             <v-card-text v-if="this.tab === 'tab-2'">
-              <h3>ここに精算結果表示</h3>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-text-field
+                    v-model="exact.targetPoint"
+                    label="目標ポイント"
+                    suffix="ポイント"
+                    readonly
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-text-field
+                    v-model="exact.count"
+                    label="周回数"
+                    suffix="周"
+                    readonly
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-text-field
+                    v-model="exact.result"
+                    label="最終ポイント"
+                    suffix="ポイント"
+                    readonly
+                  />
+                </v-col>
+              </v-row>
             </v-card-text>
           </v-card>
         </v-col>
@@ -153,7 +201,12 @@ export default {
       approximate: {
         result: 0,
         count: 0,
-        targetPoint: 0
+        targetPoint: ""
+      },
+      exact: {
+        result: 0,
+        count: 0,
+        targetPoint: ""
       }
     }
   },
@@ -180,6 +233,16 @@ export default {
       this.approximate.count = 0
       this.approximate.result = 0
       this.approximate.targetPoint = ""
+    },
+    exactCalculation(count, result, targetPoint) {
+      this.exact.count = count
+      this.exact.result = result
+      this.exact.targetPoint = targetPoint
+    },
+    resetExactCalculation() {
+      this.exact.count = 0
+      this.exact.result = 0
+      this.exact.targetPoint = ""
     }
   }
 }
